@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Groupes — Admin Mia Darling</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --bg-primary: #0f0f0f;
+      --bg-secondary: #1a1a1a;
+      --bg-tertiary: #252525;
+      --bg-chat: #0a0a0a;
+      --purple-gradient: linear-gradient(135deg, #6A3FBF 0%, #A66CFF 100%);
+      --purple-primary: #A66CFF;
+      --purple-secondary: #C29AFF;
+      --purple-dark: #25015B;
+      --purple-glow: rgba(166, 108, 255, 0.15);
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255, 255, 255, 0.75);
+      --text-muted: rgba(255, 255, 255, 0.45);
+      --border-subtle: rgba(255, 255, 255, 0.1);
+      --border-light: rgba(255, 255, 255, 0.15);
+      --message-out: #25015B;
+      --message-in: #1f1f1f;
+      --success: #10B981;
+      --danger: #EF4444;
+      --warning: #F59E0B;
+      --online: #22C55E;
+    }
+
+    html, body { height: 100%; overflow: hidden; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    .app-container { display: flex; height: 100vh; width: 100vw; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 400px;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 20px;
+      background: var(--bg-tertiary);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .sidebar-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .admin-badge-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-badge-header h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .admin-tag {
+      background: var(--purple-primary);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .header-actions { display: flex; gap: 8px; }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .icon-btn:hover { background: var(--bg-chat); color: var(--text-primary); border-color: var(--border-light); }
+
+    .search-container { position: relative; }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 16px 12px 44px;
+      background: var(--bg-chat);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .search-input:focus { outline: none; border-color: var(--purple-primary); }
+    .search-input::placeholder { color: var(--text-muted); }
+
+    .search-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    /* Stats Bar */
+    .stats-bar {
+      display: flex;
+      gap: 12px;
+      padding: 16px 20px;
+      background: var(--bg-tertiary);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .stat-item {
+      flex: 1;
+      text-align: center;
+      padding: 12px;
+      background: var(--bg-secondary);
+      border-radius: 10px;
+    }
+
+    .stat-value { font-size: 24px; font-weight: 700; color: var(--purple-secondary); }
+    .stat-label { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+
+    .groups-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .groups-list::-webkit-scrollbar { width: 6px; }
+    .groups-list::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+
+    .group-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+    }
+
+    .group-item:hover { background: var(--bg-tertiary); }
+    .group-item.active { background: var(--purple-glow); }
+
+    .group-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: var(--purple-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .group-preview { flex: 1; min-width: 0; }
+    .group-name { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+    .group-meta { display: flex; gap: 12px; font-size: 12px; color: var(--text-muted); }
+
+    .group-status-badge {
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .group-status-badge.active { background: rgba(34, 197, 94, 0.2); color: #22C55E; }
+    .group-status-badge.closed { background: rgba(239, 68, 68, 0.2); color: #EF4444; }
+
+    /* CHAT AREA */
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-chat);
+      position: relative;
+    }
+
+    .chat-header {
+      padding: 16px 24px;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 10;
+    }
+
+    .chat-header-left { display: flex; align-items: center; gap: 16px; }
+
+    .chat-group-info { display: flex; flex-direction: column; gap: 4px; }
+    .chat-group-name { font-weight: 600; font-size: 18px; }
+    .chat-group-meta { font-size: 13px; color: var(--text-muted); display: flex; align-items: center; gap: 8px; }
+
+    .chat-header-right { display: flex; align-items: center; gap: 8px; }
+
+    .btn-action {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+    .btn-action.danger:hover { background: rgba(239, 68, 68, 0.1); color: var(--danger); border-color: var(--danger); }
+
+    /* MESSAGES */
+    .messages-area {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .messages-area::-webkit-scrollbar { width: 6px; }
+    .messages-area::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+
+    .date-separator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 0;
+    }
+
+    .date-separator span {
+      padding: 6px 16px;
+      background: var(--bg-tertiary);
+      border-radius: 8px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .message-wrapper {
+      display: flex;
+      flex-direction: column;
+      max-width: 60%;
+      animation: messageIn 0.2s ease-out;
+    }
+
+    @keyframes messageIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .message-wrapper.own { align-self: flex-end; align-items: flex-end; }
+    .message-wrapper.Other { align-self: flex-start; align-items: flex-start; }
+
+    .message-bubble {
+      padding: 12px 16px;
+      border-radius: 16px;
+      position: relative;
+      word-wrap: break-word;
+    }
+
+    .message-wrapper.Other .message-bubble {
+      background: var(--message-in);
+      border-bottom-left-radius: 4px;
+    }
+
+    .message-wrapper.Own .message-bubble {
+      background: var(--message-out);
+      border-bottom-right-radius: 4px;
+    }
+
+    .message-sender {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--purple-secondary);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .message-wrapper.Own .message-sender { display: none; }
+
+    .message-text { font-size: 15px; line-height: 1.5; color: var(--text-primary); }
+
+    .message-meta {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .message-time { font-size: 11px; color: var(--text-muted); }
+
+    .message-actions {
+      display: none;
+      position: absolute;
+      top: -8px;
+      right: 8px;
+      background: var(--bg-tertiary);
+      border-radius: 8px;
+      padding: 4px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .message-wrapper:hover .message-actions { display: flex; gap: 4px; }
+
+    .msg-action-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .msg-action-btn:hover { background: var(--bg-secondary); color: var(--text-primary); }
+    .msg-action-btn.danger:hover { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+
+    /* INPUT AREA */
+    .input-area {
+      padding: 16px 24px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border-subtle);
+      position: relative;
+      z-index: 10;
+    }
+
+    .input-container { display: flex; align-items: flex-end; gap: 12px; }
+
+    .message-input-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 4px 4px 4px 16px;
+      transition: border-color 0.2s;
+    }
+
+    .message-input-wrapper:focus-within { border-color: var(--purple-primary); }
+
+    .message-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      font-size: 15px;
+      font-family: inherit;
+      resize: none;
+      max-height: 120px;
+      min-height: 24px;
+      padding: 10px 0;
+      line-height: 1.4;
+    }
+
+    .message-input:focus { outline: none; }
+    .message-input::placeholder { color: var(--text-muted); }
+
+    .send-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: var(--purple-gradient);
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .send-btn:hover { transform: scale(1.02); box-shadow: 0 4px 20px rgba(166, 108, 255, 0.3); }
+
+    /* EMPTY STATE */
+    .empty-chat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      color: var(--text-muted);
+    }
+
+    .empty-icon {
+      width: 100px;
+      height: 100px;
+      background: var(--purple-glow);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .empty-icon svg { width: 48px; height: 48px; color: var(--purple-primary); }
+    .empty-title { font-size: 20px; font-weight: 600; color: var(--text-primary); }
+    .empty-desc { font-size: 14px; text-align: center; max-width: 280px; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-overlay.active { display: flex; }
+
+    .modal {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 24px;
+      width: 100%;
+      max-width: 440px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title { font-size: 18px; font-weight: 600; }
+
+    .modal-body { display: flex; flex-direction: column; gap: 16px; }
+
+    .form-group label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; }
+
+    .form-input {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      color: var(--text-primary);
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .form-input:focus { outline: none; border-color: var(--purple-primary); }
+
+    .modal-footer {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary { background: var(--purple-gradient); border: none; color: white; }
+    .btn-primary:hover { box-shadow: 0 4px 16px rgba(166, 108, 255, 0.3); }
+    .btn-secondary { background: transparent; border: 1px solid var(--border-light); color: var(--text-secondary); }
+    .btn-secondary:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+
+    /* CONNECTION STATUS */
+    .connection-status {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--purple-primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      z-index: 1000;
+      transition: transform 0.3s;
+    }
+
+    .connection-status.connecting { animation: connecting 1.5s infinite; }
+    .connection-status.connected { transform: scaleX(1); background: var(--success); }
+
+    @keyframes connecting {
+      0% { transform: scaleX(0); transform-origin: left; }
+      50% { transform: scaleX(1); transform-origin: left; }
+      50.01% { transform: scaleX(1); transform-origin: right; }
+      100% { transform: scaleX(0); transform-origin: right; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .sidebar { width: 100%; max-width: 100%; position: fixed; z-index: 100; }
+      .sidebar.hidden { transform: translateX(-100%); }
+      .chat-main { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="connection-status" id="connectionStatus"></div>
+  
+  <div class="app-container">
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-top">
+          <div class="admin-badge-header">
+            <h1>Groupes</h1>
+            <span class="admin-tag">Admin</span>
+          </div>
+          <div class="header-actions">
+            <button class="icon-btn" onclick="showCreateModal()" title="Créer un groupe">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+              </svg>
+            </button>
+            <button class="icon-btn" onclick="logout()" title="Déconnexion">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                <polyline points="16 17 21 12 16 7"></polyline>
+                <line x1="21" y1="12" x2="9" y2="12"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="search-container">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" class="search-input" placeholder="Rechercher un groupe..." id="searchInput" oninput="filterGroups()">
+        </div>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-value" id="totalGroups">0</div>
+          <div class="stat-label">Groupes</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="totalMessages">0</div>
+          <div class="stat-label">Messages</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="totalMembers">0</div>
+          <div class="stat-label">Membres</div>
+        </div>
+      </div>
+
+      <div class="groups-list" id="groupsList"></div>
+    </aside>
+
+    <!-- CHAT MAIN -->
+    <main class="chat-main" id="chatMain">
+      <div class="empty-chat" id="emptyChat">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <div class="empty-title">Gestion des Groupes</div>
+        <div class="empty-desc">Sélectionnez un groupe pour modérer les discussions et répondre aux utilisateurs</div>
+      </div>
+
+      <div id="chatContent" style="display:none; flex-direction: column; height: 100%;">
+        <div class="chat-header">
+          <div class="chat-header-left">
+            <div class="chat-group-info">
+              <div class="chat-group-name" id="chatGroupName">Groupe</div>
+              <div class="chat-group-meta">
+                <span id="memberCount">0 membres</span>
+                <span>•</span>
+                <span id="groupStatus" class="group-status-badge active">Actif</span>
+              </div>
+            </div>
+          </div>
+          <div class="chat-header-right">
+            <button class="btn-action" onclick="toggleGroupStatus()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span id="toggleBtnText">Fermer</span>
+            </button>
+            <button class="btn-action danger" onclick="deleteGroup()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              Supprimer
+            </button>
+          </div>
+        </div>
+
+        <div class="messages-area" id="messagesArea"></div>
+
+        <div class="input-area">
+          <div class="input-container">
+            <div class="message-input-wrapper">
+              <textarea class="message-input" id="messageInput" placeholder="Répondre en tant qu'admin..." rows="1" onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
+            </div>
+            <button class="send-btn" onclick="sendMessage()">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- CREATE MODAL -->
+  <div class="modal-overlay" id="createModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">Créer un groupe</h3>
+        <button class="icon-btn" onclick="hideCreateModal()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Nom du groupe</label>
+          <input type="text" class="form-input" id="groupNameInput" placeholder="Ex: Support technique">
+        </div>
+        <div class="form-group">
+          <label>Description (optionnel)</label>
+          <input type="text" class="form-input" id="groupDescInput" placeholder="Description du groupe">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="hideCreateModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="createGroup()">Créer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-config.js"></script>
+  <script>
+    // State
+    let currentGroup = null;
+    let currentSession = null;
+    let realtimeChannel = null;
+    let allGroups = [];
+
+    // Initialize
+    (async function init() {
+      await requireAdminAuth();
+      
+      const sessionToken = localStorage.getItem('mia_darling_session');
+      if (!sessionToken) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      currentSession = { session_token: sessionToken };
+      await loadGroups();
+      setupRealtime();
+    })();
+
+    // Realtime
+    function setupRealtime() {
+      const supabase = window.supabase;
+      if (!supabase) return;
+
+      showConnectionStatus('connecting');
+
+      realtimeChannel = supabase.channel('admin-group-messages')
+        .on('postgres_changes', {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'group_messages'
+        }, (payload) => {
+          if (currentGroup && payload.new.group_id === currentGroup.id) {
+            appendMessage(payload.new);
+          }
+        })
+        .subscribe((status) => {
+          if (status === 'SUBSCRIBED') showConnectionStatus('connected');
+        });
+    }
+
+    function showConnectionStatus(status) {
+      const el = document.getElementById('connectionStatus');
+      el.className = 'connection-status ' + status;
+      if (status === 'connected') setTimeout(() => el.className = 'connection-status', 2000);
+    }
+
+    // Load Groups
+    async function loadGroups() {
+      const supabase = window.supabase;
+      const { data, error } = await supabase
+        .from('groups')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Erreur:', error);
+        return;
+      }
+
+      allGroups = data || [];
+      renderGroups(allGroups);
+      updateStats();
+    }
+
+    function renderGroups(groups) {
+      const container = document.getElementById('groupsList');
+      if (groups.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-muted);">Aucun groupe</div>';
+        return;
+      }
+
+      container.innerHTML = groups.map(g => `
+        <div class="group-item ${currentGroup?.id === g.id ? 'active' : ''}" onclick="selectGroup('${g.id}')">
+          <div class="group-avatar">${g.name.charAt(0).toUpperCase()}</div>
+          <div class="group-preview">
+            <div class="group-name">${escapeHtml(g.name)}</div>
+            <div class="group-meta">
+              <span>${g.members_count || 0} membres</span>
+              <span class="group-status-badge ${g.status}">${g.status === 'active' ? 'Actif' : 'Fermé'}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterGroups() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      renderGroups(allGroups.filter(g => g.name.toLowerCase().includes(query)));
+    }
+
+    function updateStats() {
+      document.getElementById('totalGroups').textContent = allGroups.length;
+      document.getElementById('totalMembers').textContent = allGroups.reduce((sum, g) => sum + (g.members_count || 0), 0);
+    }
+
+    // Select Group
+    async function selectGroup(groupId) {
+      const group = allGroups.find(g => g.id === groupId);
+      if (!group) return;
+
+      currentGroup = group;
+      renderGroups(allGroups);
+
+      document.getElementById('emptyChat').style.display = 'none';
+      document.getElementById('chatContent').style.display = 'flex';
+
+      document.getElementById('chatGroupName').textContent = group.name;
+      document.getElementById('memberCount').textContent = `${group.members_count || 0} membres`;
+      
+      const statusBadge = document.getElementById('groupStatus');
+      statusBadge.className = `group-status-badge ${group.status}`;
+      statusBadge.textContent = group.status === 'active' ? 'Actif' : 'Fermé';
+      
+      document.getElementById('toggleBtnText').textContent = group.status === 'active' ? 'Fermer' : 'Réouvrir';
+
+      await loadMessages(groupId);
+    }
+
+    // Messages
+    async function loadMessages(groupId) {
+      const supabase = window.supabase;
+      const { data: messages, error } = await supabase
+        .from('group_messages')
+        .select('*')
+        .eq('group_id', groupId)
+        .eq('status', 'visible')
+        .order('created_at', { ascending: true });
+
+      if (error) {
+        console.error('Erreur:', error);
+        return;
+      }
+
+      const container = document.getElementById('messagesArea');
+      container.innerHTML = '';
+
+      if (!messages || messages.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:60px;color:var(--text-muted);">Aucun message</div>';
+        return;
+      }
+
+      // Get anonymous names
+      const tokens = [...new Set(messages.map(m => m.session_token))];
+      const { data: sessions } = await supabase
+        .from('anonymous_sessions')
+        .select('session_token, anonymous_name')
+        .in('session_token', tokens);
+
+      const nameMap = {};
+      (sessions || []).forEach(s => nameMap[s.session_token] = s.anonymous_name);
+
+      let lastDate = '';
+      messages.forEach(m => {
+        const msgDate = new Date(m.created_at).toDateString();
+        if (msgDate !== lastDate) {
+          lastDate = msgDate;
+          container.innerHTML += `<div class="date-separator"><span>${formatDate(m.created_at)}</span></div>`;
+        }
+        appendMessageToContainer(m, nameMap, container);
+      });
+
+      scrollToBottom();
+    }
+
+    function appendMessage(msg) {
+      const container = document.getElementById('messagesArea');
+      appendMessageToContainer(msg, {}, container);
+      scrollToBottom();
+    }
+
+    function appendMessageToContainer(m, nameMap, container) {
+      const isOwn = m.is_admin_reply;
+      const wrapper = document.createElement('div');
+      wrapper.className = `message-wrapper ${isOwn ? 'Own' : 'Other'}`;
+      wrapper.innerHTML = `
+        <div class="message-sender">
+          ${isOwn ? '<span style="color:var(--purple-secondary)">Admin</span>' : escapeHtml(nameMap[m.session_token] || 'Anonyme')}
+        </div>
+        <div class="message-bubble">
+          <div class="message-text">${escapeHtml(m.content)}</div>
+          <div class="message-meta">
+            <span class="message-time">${formatTime(m.created_at)}</span>
+          </div>
+        </div>
+        <div class="message-actions">
+          <button class="msg-action-btn danger" onclick="deleteMessage('${m.id}')" title="Supprimer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </button>
+        </div>
+      `;
+      container.appendChild(wrapper);
+    }
+
+    function scrollToBottom() {
+      const container = document.getElementById('messagesArea');
+      container.scrollTop = container.scrollHeight;
+    }
+
+    // Send Admin Message
+    async function sendMessage() {
+      const input = document.getElementById('messageInput');
+      const content = input.value.trim();
+      if (!content || !currentGroup) return;
+
+      input.value = '';
+      input.style.height = 'auto';
+
+      const supabase = window.supabase;
+      const { error } = await supabase
+        .from('group_messages')
+        .insert({
+          group_id: currentGroup.id,
+          session_token: currentSession.session_token,
+          content: content,
+          is_admin_reply: true
+        });
+
+      if (error) console.error('Erreur:', error);
+    }
+
+    function handleKeyDown(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    }
+
+    function autoResize(el) {
+      el.style.height = 'auto';
+      el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+    }
+
+    // Group Actions
+    async function toggleGroupStatus() {
+      if (!currentGroup) return;
+      const supabase = window.supabase;
+      const newStatus = currentGroup.status === 'active' ? 'closed' : 'active';
+      
+      const { error } = await supabase
+        .from('groups')
+        .update({ status: newStatus })
+        .eq('id', currentGroup.id);
+
+      if (!error) {
+        currentGroup.status = newStatus;
+        renderGroups(allGroups);
+        selectGroup(currentGroup.id);
+      }
+    }
+
+    async function deleteGroup() {
+      if (!currentGroup || !confirm('Supprimer ce groupe ?')) return;
+      const supabase = window.supabase;
+      
+      const { error } = await supabase
+        .from('groups')
+        .delete()
+        .eq('id', currentGroup.id);
+
+      if (!error) {
+        allGroups = allGroups.filter(g => g.id !== currentGroup.id);
+        currentGroup = null;
+        renderGroups(allGroups);
+        document.getElementById('chatContent').style.display = 'none';
+        document.getElementById('emptyChat').style.display = 'flex';
+      }
+    }
+
+    async function deleteMessage(messageId) {
+      if (!confirm('Supprimer ce message ?')) return;
+      const supabase = window.supabase;
+      
+      await supabase
+        .from('group_messages')
+        .update({ status: 'deleted' })
+        .eq('id', messageId);
+      
+      await loadMessages(currentGroup.id);
+    }
+
+    // Create Group
+    function showCreateModal() {
+      document.getElementById('createModal').classList.add('active');
+      document.getElementById('groupNameInput').focus();
+    }
+
+    function hideCreateModal() {
+      document.getElementById('createModal').classList.remove('active');
+      document.getElementById('groupNameInput').value = '';
+      document.getElementById('groupDescInput').value = '';
+    }
+
+    async function createGroup() {
+      const name = document.getElementById('groupNameInput').value.trim();
+      const desc = document.getElementById('groupDescInput').value.trim();
+      if (!name) return;
+
+      const supabase = window.supabase;
+      const { data, error } = await supabase
+        .from('groups')
+        .insert({ name, description: desc, status: 'active' })
+        .select()
+        .single();
+
+      if (!error && data) {
+        allGroups.unshift(data);
+        renderGroups(allGroups);
+        updateStats();
+        hideCreateModal();
+        selectGroup(data.id);
+      }
+    }
+
+    // Helpers
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text || '';
+      return div.innerHTML;
+    }
+
+    function formatTime(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      const today = new Date();
+      if (date.toDateString() === today.toDateString()) return "Aujourd'hui";
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      if (date.toDateString() === yesterday.toDateString()) return 'Hier';
+      return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+    }
+
+    function logout() {
+      if (confirm('Se déconnecter ?')) {
+        localStorage.removeItem('mia_darling_session');
+        window.location.href = 'index.html';
+      }
+    }
+  </script>
+</body>
+</html>

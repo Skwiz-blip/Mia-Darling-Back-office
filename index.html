@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mia Darling — Administration</title>
+  <title>back-office</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap"
+    rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <style>
     :root {
       --bg: #000000;
@@ -15,15 +19,22 @@
       --purple-light: #A66CFF;
       --purple-soft: #C29AFF;
       --white: #FFFFFF;
-      --surface: rgba(255,255,255,.04);
-      --border: rgba(255,255,255,.08);
-      --border-accent: rgba(166,108,255,.4);
-      --text-muted: rgba(255,255,255,.4);
-      --text-sub: rgba(255,255,255,.65);
+      --surface: rgba(255, 255, 255, .04);
+      --border: rgba(255, 255, 255, .08);
+      --border-accent: rgba(166, 108, 255, .4);
+      --text-muted: rgba(255, 255, 255, .4);
+      --text-sub: rgba(255, 255, 255, .65);
       --error: #FF6B6B;
       --success: #6BFFB8;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: 'DM Sans', sans-serif;
@@ -35,9 +46,9 @@
       justify-content: center;
       padding: 24px;
       background-image:
-        radial-gradient(ellipse 70% 50% at 15% 110%, rgba(37,1,91,.7) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 40% at 85% -5%, rgba(106,63,191,.25) 0%, transparent 60%),
-        radial-gradient(ellipse 30% 30% at 50% 50%, rgba(166,108,255,.04) 0%, transparent 70%);
+        radial-gradient(ellipse 70% 50% at 15% 110%, rgba(37, 1, 91, .7) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 85% -5%, rgba(106, 63, 191, .25) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 30% at 50% 50%, rgba(166, 108, 255, .04) 0%, transparent 70%);
     }
 
     /* Noise overlay */
@@ -66,6 +77,7 @@
       text-align: center;
       padding-bottom: 32px;
     }
+
     .logo-name {
       font-family: 'Great Vibes', cursive;
       font-size: 3rem;
@@ -73,13 +85,17 @@
       line-height: 1;
       margin-bottom: 6px;
     }
-    .logo-name span { color: var(--purple-soft); }
+
+    .logo-name span {
+      color: var(--purple-soft);
+    }
+
     .logo-badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(166,108,255,.12);
-      border: 1px solid rgba(166,108,255,.3);
+      background: rgba(166, 108, 255, .12);
+      border: 1px solid rgba(166, 108, 255, .3);
       border-radius: 20px;
       padding: 4px 14px;
       font-size: .72rem;
@@ -89,7 +105,16 @@
       color: var(--purple-soft);
       margin-top: 10px;
     }
-    .logo-badge::before { content: '⬡'; font-size: .9em; }
+
+    .logo-badge::before {
+      content: '';
+      display: none;
+    }
+
+    .logo-badge svg {
+      width: 12px;
+      height: 12px;
+    }
 
     /* Card */
     .card {
@@ -99,12 +124,14 @@
       padding: 36px 32px;
       backdrop-filter: blur(20px);
     }
+
     .card-title {
       font-size: 1.05rem;
       font-weight: 600;
       margin-bottom: 6px;
       color: var(--white);
     }
+
     .card-sub {
       font-size: .82rem;
       color: var(--text-muted);
@@ -119,14 +146,16 @@
       gap: 7px;
       margin-bottom: 16px;
     }
+
     .field label {
       font-size: .78rem;
       font-weight: 500;
       letter-spacing: .04em;
       color: var(--text-sub);
     }
+
     .field input {
-      background: rgba(255,255,255,.05);
+      background: rgba(255, 255, 255, .05);
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 13px 16px;
@@ -136,26 +165,36 @@
       outline: none;
       transition: border-color .2s, background .2s;
     }
-    .field input::placeholder { color: var(--text-muted); }
+
+    .field input::placeholder {
+      color: var(--text-muted);
+    }
+
     .field input:focus {
       border-color: var(--border-accent);
-      background: rgba(166,108,255,.06);
+      background: rgba(166, 108, 255, .06);
     }
-    .field input.error { border-color: var(--error); }
+
+    .field input.error {
+      border-color: var(--error);
+    }
 
     .error-msg {
       display: none;
       align-items: center;
       gap: 8px;
-      background: rgba(255,107,107,.08);
-      border: 1px solid rgba(255,107,107,.25);
+      background: rgba(255, 107, 107, .08);
+      border: 1px solid rgba(255, 107, 107, .25);
       border-radius: 10px;
       padding: 10px 14px;
       font-size: .8rem;
       color: var(--error);
       margin-bottom: 16px;
     }
-    .error-msg.visible { display: flex; }
+
+    .error-msg.visible {
+      display: flex;
+    }
 
     .btn-login {
       width: 100%;
@@ -173,28 +212,52 @@
       position: relative;
       overflow: hidden;
     }
+
     .btn-login::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(255,255,255,0);
+      background: rgba(255, 255, 255, 0);
       transition: background .2s;
     }
-    .btn-login:hover::after { background: rgba(255,255,255,.06); }
-    .btn-login:active { transform: scale(.98); }
-    .btn-login:disabled { opacity: .5; cursor: not-allowed; }
+
+    .btn-login:hover::after {
+      background: rgba(255, 255, 255, .06);
+    }
+
+    .btn-login:active {
+      transform: scale(.98);
+    }
+
+    .btn-login:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
     .btn-login .spinner {
       display: none;
-      width: 16px; height: 16px;
-      border: 2px solid rgba(255,255,255,.3);
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, .3);
       border-top-color: white;
       border-radius: 50%;
       animation: spin .7s linear infinite;
       margin: 0 auto;
     }
-    .btn-login.loading .btn-text { display: none; }
-    .btn-login.loading .spinner { display: block; }
-    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .btn-login.loading .btn-text {
+      display: none;
+    }
+
+    .btn-login.loading .spinner {
+      display: block;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
     /* Footer note */
     .security-note {
@@ -206,23 +269,32 @@
       justify-content: center;
       padding-top: 4px;
     }
-    .security-note svg { width: 14px; height: 14px; opacity: .6; flex-shrink: 0; }
 
-    /* Supabase CDN script tag placeholder */
+    .security-note svg {
+      width: 14px;
+      height: 14px;
+      opacity: .6;
+      flex-shrink: 0;
+    }
+ 
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="logo-section">
       <div class="logo-name">Mia <span>Darling</span></div>
     </div>
 
-    <div class="card">
-      <div class="card-title">Accès administrateur</div>
+    <div class="card"> 
       <div class="card-sub">Connectez-vous avec vos identifiants admin pour accéder au tableau de bord.</div>
 
       <div class="error-msg" id="errorMsg">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="12" />
+          <line x1="12" y1="16" x2="12.01" y2="16" />
+        </svg>
         <span id="errorText">Email ou mot de passe incorrect.</span>
       </div>
 
@@ -243,7 +315,9 @@
     </div>
 
     <div class="security-note">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
       Accès réservé aux administrateurs autorisés
     </div>
   </div>
@@ -260,6 +334,7 @@
 
     // Redirect if already logged in
     window.addEventListener('load', async () => {
+      if (window.lucide) lucide.createIcons();
       if (!adminSupabase) return;
       const { data: { session } } = await adminSupabase.auth.getSession();
       if (session) {
@@ -343,4 +418,5 @@
     }
   </script>
 </body>
+
 </html>

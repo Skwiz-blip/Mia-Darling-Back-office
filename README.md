@@ -7,7 +7,7 @@ Projet séparé, déployable indépendamment.
 
 ```
 MiaDarlia-Admin/
-├── admin-login.html        # Page de connexion (email + mot de passe)
+├── index.html        # Page de connexion (email + mot de passe)
 ├── admin-dashboard.html    # Dashboard principal (toutes les sections)
 ├── js/
 │   └── admin-config.js     # Config Supabase + helpers partagés
@@ -57,7 +57,7 @@ Déployez sur n'importe quel hébergeur statique, idéalement sous un sous-domai
 
 ### Étape 5 — Se connecter
 
-Ouvrez `admin-login.html`, entrez votre email + mot de passe.  
+Ouvrez `index.html`, entrez votre email + mot de passe.  
 Vous serez redirigé automatiquement vers le dashboard.
 
 ## Sécurité
@@ -73,7 +73,7 @@ Pour lier depuis `welcome.html` du projet principal, ajoutez un lien discret :
 
 ```html
 <!-- Lien discret en bas de welcome.html -->
-<a href="https://admin.miadarling.com/admin-login.html" 
+<a href="https://admin.miadarling.com/index.html" 
    style="opacity: 0.15; font-size: 0.7rem; color: inherit; text-decoration: none;">
   ⬡
 </a>

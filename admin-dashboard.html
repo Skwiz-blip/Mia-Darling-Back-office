@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mia Darling — Dashboard Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300&display=swap"
+    rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <style>
     :root {
       --bg: #000000;
@@ -16,12 +20,12 @@
       --purple-light: #A66CFF;
       --purple-soft: #C29AFF;
       --white: #FFFFFF;
-      --surface: rgba(255,255,255,.04);
-      --surface2: rgba(255,255,255,.07);
-      --border: rgba(255,255,255,.08);
-      --border-accent: rgba(166,108,255,.35);
-      --text-muted: rgba(255,255,255,.38);
-      --text-sub: rgba(255,255,255,.62);
+      --surface: rgba(255, 255, 255, .04);
+      --surface2: rgba(255, 255, 255, .07);
+      --border: rgba(255, 255, 255, .08);
+      --border-accent: rgba(166, 108, 255, .35);
+      --text-muted: rgba(255, 255, 255, .38);
+      --text-sub: rgba(255, 255, 255, .62);
       --error: #FF6B6B;
       --warn: #FFB86B;
       --success: #6BFFB8;
@@ -29,7 +33,14 @@
       --sidebar-w: 240px;
       --nav-h: 64px;
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
       font-family: 'DM Sans', sans-serif;
@@ -53,9 +64,11 @@
     /* ── SIDEBAR ── */
     .sidebar {
       position: fixed;
-      top: 0; left: 0; bottom: 0;
+      top: 0;
+      left: 0;
+      bottom: 0;
       width: var(--sidebar-w);
-      background: rgba(0,0,0,.9);
+      background: rgba(0, 0, 0, .9);
       border-right: 1px solid var(--border);
       backdrop-filter: blur(20px);
       display: flex;
@@ -68,13 +81,18 @@
       padding: 24px 20px 20px;
       border-bottom: 1px solid var(--border);
     }
+
     .sidebar-logo .wordmark {
       font-family: 'Great Vibes', cursive;
       font-size: 1.7rem;
       color: var(--white);
       line-height: 1;
     }
-    .sidebar-logo .wordmark span { color: var(--purple-soft); }
+
+    .sidebar-logo .wordmark span {
+      color: var(--purple-soft);
+    }
+
     .sidebar-logo .badge {
       font-size: .62rem;
       letter-spacing: .14em;
@@ -118,30 +136,54 @@
       text-decoration: none;
       user-select: none;
     }
-    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: .7; transition: opacity .15s; }
-    .nav-item:hover { background: var(--surface2); color: var(--white); }
-    .nav-item:hover svg { opacity: 1; }
-    .nav-item.active {
-      background: rgba(166,108,255,.14);
-      color: var(--purple-soft);
-      border: 1px solid rgba(166,108,255,.2);
+
+    .nav-item svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      opacity: .7;
+      transition: opacity .15s;
     }
-    .nav-item.active svg { opacity: 1; }
+
+    .nav-item:hover {
+      background: var(--surface2);
+      color: var(--white);
+    }
+
+    .nav-item:hover svg {
+      opacity: 1;
+    }
+
+    .nav-item.active {
+      background: rgba(166, 108, 255, .14);
+      color: var(--purple-soft);
+      border: 1px solid rgba(166, 108, 255, .2);
+    }
+
+    .nav-item.active svg {
+      opacity: 1;
+    }
+
     .nav-badge {
       margin-left: auto;
-      background: rgba(255,107,107,.2);
+      background: rgba(255, 107, 107, .2);
       color: var(--error);
       border-radius: 20px;
       padding: 2px 7px;
       font-size: .65rem;
       font-weight: 700;
     }
-    .nav-badge.green { background: rgba(107,255,184,.15); color: var(--success); }
+
+    .nav-badge.green {
+      background: rgba(107, 255, 184, .15);
+      color: var(--success);
+    }
 
     .sidebar-footer {
       padding: 16px 12px;
       border-top: 1px solid var(--border);
     }
+
     .admin-pill {
       display: flex;
       align-items: center;
@@ -151,24 +193,57 @@
       background: var(--surface);
       border: 1px solid var(--border);
     }
+
     .admin-avatar {
-      width: 32px; height: 32px;
+      width: 32px;
+      height: 32px;
       background: linear-gradient(135deg, var(--purple-mid), var(--purple-light));
       border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: .75rem; font-weight: 700; flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .75rem;
+      font-weight: 700;
+      flex-shrink: 0;
     }
-    .admin-info { flex: 1; overflow: hidden; }
-    .admin-name { font-size: .78rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .admin-role { font-size: .68rem; color: var(--text-muted); }
+
+    .admin-info {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .admin-name {
+      font-size: .78rem;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .admin-role {
+      font-size: .68rem;
+      color: var(--text-muted);
+    }
+
     .logout-btn {
-      background: none; border: none; cursor: pointer;
-      color: var(--text-muted); padding: 4px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 4px;
       transition: color .15s;
-      display: flex; align-items: center;
+      display: flex;
+      align-items: center;
     }
-    .logout-btn:hover { color: var(--error); }
-    .logout-btn svg { width: 15px; height: 15px; }
+
+    .logout-btn:hover {
+      color: var(--error);
+    }
+
+    .logout-btn svg {
+      width: 15px;
+      height: 15px;
+    }
 
     /* ── MAIN ── */
     .main {
@@ -186,20 +261,35 @@
       justify-content: space-between;
       padding: 0 32px;
       border-bottom: 1px solid var(--border);
-      background: rgba(0,0,0,.6);
+      background: rgba(0, 0, 0, .6);
       backdrop-filter: blur(20px);
       position: sticky;
       top: 0;
       z-index: 50;
     }
+
     .topbar-title {
       font-size: 1rem;
       font-weight: 600;
     }
-    .topbar-title span { color: var(--text-muted); font-weight: 400; font-size: .85rem; margin-left: 8px; }
-    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+
+    .topbar-title span {
+      color: var(--text-muted);
+      font-weight: 400;
+      font-size: .85rem;
+      margin-left: 8px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
     .refresh-btn {
-      display: flex; align-items: center; gap: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       padding: 8px 14px;
       background: var(--surface);
       border: 1px solid var(--border);
@@ -211,8 +301,17 @@
       cursor: pointer;
       transition: all .15s;
     }
-    .refresh-btn:hover { background: var(--surface2); color: var(--white); border-color: var(--border-accent); }
-    .refresh-btn svg { width: 14px; height: 14px; }
+
+    .refresh-btn:hover {
+      background: var(--surface2);
+      color: var(--white);
+      border-color: var(--border-accent);
+    }
+
+    .refresh-btn svg {
+      width: 14px;
+      height: 14px;
+    }
 
     /* ── CONTENT ── */
     .content {
@@ -223,8 +322,13 @@
     }
 
     /* ── SECTION MANAGEMENT ── */
-    .section { display: none; }
-    .section.active { display: block; }
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
 
     /* ── STAT CARDS ── */
     .stats-grid {
@@ -233,6 +337,7 @@
       gap: 16px;
       margin-bottom: 28px;
     }
+
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -242,31 +347,69 @@
       overflow: hidden;
       transition: border-color .2s;
     }
+
     .stat-card::before {
       content: '';
       position: absolute;
-      top: -30px; right: -30px;
-      width: 90px; height: 90px;
+      top: -30px;
+      right: -30px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       opacity: .08;
     }
-    .stat-card.purple::before { background: var(--purple-light); }
-    .stat-card.green::before { background: var(--success); }
-    .stat-card.blue::before { background: var(--info); }
-    .stat-card.orange::before { background: var(--warn); }
-    .stat-card:hover { border-color: var(--border-accent); }
+
+    .stat-card.purple::before {
+      background: var(--purple-light);
+    }
+
+    .stat-card.green::before {
+      background: var(--success);
+    }
+
+    .stat-card.blue::before {
+      background: var(--info);
+    }
+
+    .stat-card.orange::before {
+      background: var(--warn);
+    }
+
+    .stat-card:hover {
+      border-color: var(--border-accent);
+    }
 
     .stat-icon {
-      width: 36px; height: 36px;
+      width: 36px;
+      height: 36px;
       border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       margin-bottom: 14px;
       font-size: 1rem;
     }
-    .stat-icon.purple { background: rgba(166,108,255,.15); }
-    .stat-icon.green { background: rgba(107,255,184,.12); }
-    .stat-icon.blue { background: rgba(107,181,255,.12); }
-    .stat-icon.orange { background: rgba(255,184,107,.12); }
+
+    .stat-icon svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    .stat-icon.purple {
+      background: rgba(166, 108, 255, .15);
+    }
+
+    .stat-icon.green {
+      background: rgba(107, 255, 184, .12);
+    }
+
+    .stat-icon.blue {
+      background: rgba(107, 181, 255, .12);
+    }
+
+    .stat-icon.orange {
+      background: rgba(255, 184, 107, .12);
+    }
 
     .stat-value {
       font-size: 2rem;
@@ -275,7 +418,13 @@
       margin-bottom: 4px;
       font-variant-numeric: tabular-nums;
     }
-    .stat-label { font-size: .78rem; color: var(--text-muted); font-weight: 400; }
+
+    .stat-label {
+      font-size: .78rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
     .stat-delta {
       font-size: .72rem;
       margin-top: 8px;
@@ -285,9 +434,21 @@
       padding: 2px 7px;
       border-radius: 20px;
     }
-    .stat-delta.up { background: rgba(107,255,184,.1); color: var(--success); }
-    .stat-delta.down { background: rgba(255,107,107,.1); color: var(--error); }
-    .stat-delta svg { width: 10px; height: 10px; }
+
+    .stat-delta.up {
+      background: rgba(107, 255, 184, .1);
+      color: var(--success);
+    }
+
+    .stat-delta.down {
+      background: rgba(255, 107, 107, .1);
+      color: var(--error);
+    }
+
+    .stat-delta svg {
+      width: 10px;
+      height: 10px;
+    }
 
     /* ── TABLES ── */
     .panel {
@@ -297,6 +458,7 @@
       overflow: hidden;
       margin-bottom: 20px;
     }
+
     .panel-header {
       padding: 18px 22px;
       border-bottom: 1px solid var(--border);
@@ -305,16 +467,25 @@
       justify-content: space-between;
       gap: 12px;
     }
+
     .panel-title {
       font-size: .9rem;
       font-weight: 600;
     }
-    .panel-meta { font-size: .78rem; color: var(--text-muted); }
 
-    .panel-actions { display: flex; gap: 8px; align-items: center; }
+    .panel-meta {
+      font-size: .78rem;
+      color: var(--text-muted);
+    }
+
+    .panel-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
 
     .search-input {
-      background: rgba(255,255,255,.05);
+      background: rgba(255, 255, 255, .05);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 7px 12px;
@@ -325,11 +496,17 @@
       width: 180px;
       transition: border-color .15s;
     }
-    .search-input::placeholder { color: var(--text-muted); }
-    .search-input:focus { border-color: var(--border-accent); }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-input:focus {
+      border-color: var(--border-accent);
+    }
 
     .filter-select {
-      background: rgba(255,255,255,.05);
+      background: rgba(255, 255, 255, .05);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 7px 10px;
@@ -339,14 +516,21 @@
       outline: none;
       cursor: pointer;
     }
-    .filter-select option { background: #1a0a2e; }
 
-    .table-wrap { overflow-x: auto; }
+    .filter-select option {
+      background: #1a0a2e;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: .83rem;
     }
+
     thead th {
       padding: 11px 16px;
       text-align: left;
@@ -358,18 +542,30 @@
       border-bottom: 1px solid var(--border);
       white-space: nowrap;
     }
+
     tbody tr {
-      border-bottom: 1px solid rgba(255,255,255,.04);
+      border-bottom: 1px solid rgba(255, 255, 255, .04);
       transition: background .12s;
     }
-    tbody tr:last-child { border-bottom: none; }
-    tbody tr:hover { background: rgba(255,255,255,.03); }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: rgba(255, 255, 255, .03);
+    }
+
     td {
       padding: 13px 16px;
       vertical-align: middle;
       color: var(--text-sub);
     }
-    td strong { color: var(--white); font-weight: 500; }
+
+    td strong {
+      color: var(--white);
+      font-weight: 500;
+    }
 
     .cell-text {
       max-width: 280px;
@@ -389,19 +585,645 @@
       font-weight: 600;
       white-space: nowrap;
     }
-    .badge::before { content: '●'; font-size: .5em; }
-    .badge.published { background: rgba(107,255,184,.1); color: var(--success); }
-    .badge.deleted { background: rgba(255,107,107,.1); color: var(--error); }
-    .badge.hidden { background: rgba(255,184,107,.1); color: var(--warn); }
-    .badge.banned { background: rgba(255,107,107,.12); color: var(--error); border: 1px solid rgba(255,107,107,.2); }
-    .badge.active { background: rgba(107,255,184,.1); color: var(--success); }
-    .badge.visible { background: rgba(107,181,255,.1); color: var(--info); }
+
+    .badge::before {
+      content: '●';
+      font-size: .5em;
+    }
+
+    .badge.published {
+      background: rgba(107, 255, 184, .1);
+      color: var(--success);
+    }
+
+    .badge.deleted {
+      background: rgba(255, 107, 107, .1);
+      color: var(--error);
+    }
+
+    .badge.hidden {
+      background: rgba(255, 184, 107, .1);
+      color: var(--warn);
+    }
+
+    .badge.banned {
+      background: rgba(255, 107, 107, .12);
+      color: var(--error);
+      border: 1px solid rgba(255, 107, 107, .2);
+    }
+
+    .badge.active {
+      background: rgba(107, 255, 184, .1);
+      color: var(--success);
+    }
+
+    .badge.visible {
+      background: rgba(107, 181, 255, .1);
+      color: var(--info);
+    }
+
+    .badge.closed {
+      background: rgba(255, 184, 107, .1);
+      color: var(--warn);
+    }
+
+    /* ═══════════════════════════════════════════════════
+       DISCUSSIONS - WhatsApp Style
+       ═══════════════════════════════════════════════════ */
+    .chat-app {
+      display: flex;
+      height: calc(100vh - var(--nav-h));
+      background: var(--bg);
+      position: relative;
+    }
+
+    .chat-sidebar {
+      width: 380px;
+      min-width: 300px;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+
+    .chat-sidebar-header {
+      padding: 16px 20px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chat-sidebar-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .chat-sidebar-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .chat-sidebar-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-search {
+      position: relative;
+    }
+
+    .chat-search input {
+      width: 100%;
+      padding: 10px 14px 10px 40px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--white);
+      font-size: .85rem;
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .chat-search input:focus {
+      border-color: var(--border-accent);
+    }
+
+    .chat-search input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .chat-search svg {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--text-muted);
+    }
+
+    .chat-stats-bar {
+      display: flex;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .chat-stat {
+      flex: 1;
+      text-align: center;
+      padding: 10px 8px;
+      background: var(--bg2);
+      border-radius: 10px;
+    }
+
+    .chat-stat-value {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--purple-soft);
+    }
+
+    .chat-stat-label {
+      font-size: .65rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chat-groups-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .chat-groups-list::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .chat-groups-list::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .chat-group-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+
+    .chat-group-item:hover {
+      background: var(--surface);
+    }
+
+    .chat-group-item.active {
+      background: rgba(166, 108, 255, .12);
+    }
+
+    .chat-group-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--purple-mid), var(--purple-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .chat-group-preview {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .chat-group-name {
+      font-weight: 600;
+      font-size: .9rem;
+      margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .chat-group-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .75rem;
+      color: var(--text-muted);
+    }
+
+    .chat-group-badge {
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: .6rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .chat-group-badge.active {
+      background: rgba(107, 255, 184, .15);
+      color: var(--success);
+    }
+
+    .chat-group-badge.closed {
+      background: rgba(255, 107, 107, .15);
+      color: var(--error);
+    }
+
+    /* Chat Main Area */
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      position: relative;
+    }
+
+    .chat-header {
+      padding: 14px 20px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .chat-header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .chat-header-info h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .chat-header-meta {
+      font-size: .75rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chat-header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .chat-header-btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-sub);
+      font-size: .8rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all .15s;
+    }
+
+    .chat-header-btn:hover {
+      background: var(--surface);
+      color: var(--white);
+    }
+
+    .chat-header-btn.danger:hover {
+      background: rgba(255, 107, 107, .1);
+      color: var(--error);
+      border-color: rgba(255, 107, 107, .3);
+    }
+
+    /* Messages Area */
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .chat-date-sep {
+      display: flex;
+      justify-content: center;
+      padding: 12px 0;
+    }
+
+    .chat-date-sep span {
+      padding: 4px 12px;
+      background: var(--surface);
+      border-radius: 8px;
+      font-size: .7rem;
+      color: var(--text-muted);
+    }
+
+    .chat-msg-wrapper {
+      display: flex;
+      flex-direction: column;
+      max-width: 65%;
+      animation: msgIn .2s ease;
+    }
+
+    @keyframes msgIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .chat-msg-wrapper.other {
+      align-self: flex-start;
+      align-items: flex-start;
+    }
+
+    .chat-msg-wrapper.own {
+      align-self: flex-end;
+      align-items: flex-end;
+    }
+
+    .chat-msg-bubble {
+      padding: 10px 14px;
+      border-radius: 14px;
+      position: relative;
+      word-wrap: break-word;
+    }
+
+    .chat-msg-wrapper.other .chat-msg-bubble {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-msg-wrapper.own .chat-msg-bubble {
+      background: rgba(166, 108, 255, .18);
+      border: 1px solid rgba(166, 108, 255, .25);
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-msg-sender {
+      font-size: .7rem;
+      font-weight: 600;
+      color: var(--purple-soft);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chat-msg-wrapper.own .chat-msg-sender {
+      display: none;
+    }
+
+    .chat-msg-admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: rgba(166, 108, 255, .25);
+      color: var(--purple-soft);
+      padding: 1px 5px;
+      border-radius: 6px;
+      font-size: .55rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+
+    .chat-msg-text {
+      font-size: .88rem;
+      line-height: 1.45;
+      color: var(--white);
+    }
+
+    .chat-msg-meta {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px;
+      margin-top: 5px;
+      font-size: .65rem;
+      color: var(--text-muted);
+    }
+
+    .chat-msg-actions {
+      display: none;
+      position: absolute;
+      top: -6px;
+      right: 8px;
+      background: var(--bg2);
+      border-radius: 6px;
+      padding: 3px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .3);
+    }
+
+    .chat-msg-wrapper:hover .chat-msg-actions {
+      display: flex;
+      gap: 2px;
+    }
+
+    .chat-msg-action-btn {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-msg-action-btn:hover {
+      background: var(--surface);
+      color: var(--white);
+    }
+
+    .chat-msg-action-btn.danger:hover {
+      background: rgba(255, 107, 107, .15);
+      color: var(--error);
+    }
+
+    /* Chat Input */
+    .chat-input-area {
+      padding: 14px 20px;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+
+    .chat-input-container {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .chat-input-wrapper {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 4px 4px 4px 14px;
+      transition: border-color .2s;
+    }
+
+    .chat-input-wrapper:focus-within {
+      border-color: var(--border-accent);
+    }
+
+    .chat-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--white);
+      font-size: .9rem;
+      font-family: inherit;
+      resize: none;
+      max-height: 100px;
+      min-height: 22px;
+      padding: 8px 0;
+      line-height: 1.4;
+      outline: none;
+    }
+
+    .chat-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .chat-send-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--purple-mid), var(--purple-light));
+      border: none;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+      flex-shrink: 0;
+    }
+
+    .chat-send-btn:hover {
+      transform: scale(1.02);
+      box-shadow: 0 4px 16px rgba(166, 108, 255, .25);
+    }
+
+    /* Empty State */
+    .chat-empty {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: var(--text-muted);
+    }
+
+    .chat-empty-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(166, 108, 255, .1);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-empty-icon svg {
+      width: 36px;
+      height: 36px;
+      color: var(--purple-soft);
+    }
+
+    .chat-empty-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .chat-empty-desc {
+      font-size: .85rem;
+      text-align: center;
+      max-width: 260px;
+    }
+
+    /* Mobile Back Button */
+    .chat-back-btn {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-sub);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+    }
+
+    .icon-btn:hover {
+      background: var(--surface);
+      color: var(--white);
+      border-color: var(--border-accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .chat-sidebar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .chat-sidebar.hidden {
+        transform: translateX(-100%);
+      }
+
+      .chat-back-btn {
+        display: flex;
+      }
+    }
 
     /* Action buttons in table */
-    .tbl-actions { display: flex; gap: 6px; }
+    .tbl-actions {
+      display: flex;
+      gap: 6px;
+    }
+
     .tbl-btn {
-      display: flex; align-items: center; justify-content: center;
-      width: 30px; height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
       border-radius: 8px;
       border: 1px solid var(--border);
       background: transparent;
@@ -409,11 +1231,35 @@
       cursor: pointer;
       transition: all .15s;
     }
-    .tbl-btn:hover { background: var(--surface2); color: var(--white); border-color: rgba(255,255,255,.15); }
-    .tbl-btn.danger:hover { background: rgba(255,107,107,.1); color: var(--error); border-color: rgba(255,107,107,.25); }
-    .tbl-btn.warn:hover { background: rgba(255,184,107,.1); color: var(--warn); border-color: rgba(255,184,107,.25); }
-    .tbl-btn.success:hover { background: rgba(107,255,184,.1); color: var(--success); border-color: rgba(107,255,184,.25); }
-    .tbl-btn svg { width: 13px; height: 13px; }
+
+    .tbl-btn:hover {
+      background: var(--surface2);
+      color: var(--white);
+      border-color: rgba(255, 255, 255, .15);
+    }
+
+    .tbl-btn.danger:hover {
+      background: rgba(255, 107, 107, .1);
+      color: var(--error);
+      border-color: rgba(255, 107, 107, .25);
+    }
+
+    .tbl-btn.warn:hover {
+      background: rgba(255, 184, 107, .1);
+      color: var(--warn);
+      border-color: rgba(255, 184, 107, .25);
+    }
+
+    .tbl-btn.success:hover {
+      background: rgba(107, 255, 184, .1);
+      color: var(--success);
+      border-color: rgba(107, 255, 184, .25);
+    }
+
+    .tbl-btn svg {
+      width: 13px;
+      height: 13px;
+    }
 
     /* Empty state */
     .empty-state {
@@ -421,8 +1267,17 @@
       text-align: center;
       color: var(--text-muted);
     }
-    .empty-state svg { width: 40px; height: 40px; margin-bottom: 12px; opacity: .3; }
-    .empty-state p { font-size: .85rem; }
+
+    .empty-state svg {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 12px;
+      opacity: .3;
+    }
+
+    .empty-state p {
+      font-size: .85rem;
+    }
 
     /* ── TOAST ── */
     #toast-container {
@@ -434,6 +1289,7 @@
       flex-direction: column;
       gap: 8px;
     }
+
     .toast {
       display: flex;
       align-items: center;
@@ -447,24 +1303,59 @@
       min-width: 240px;
       max-width: 320px;
     }
-    .toast.success { background: rgba(107,255,184,.15); border: 1px solid rgba(107,255,184,.3); color: var(--success); }
-    .toast.error { background: rgba(255,107,107,.15); border: 1px solid rgba(255,107,107,.3); color: var(--error); }
-    .toast.info { background: rgba(107,181,255,.15); border: 1px solid rgba(107,181,255,.3); color: var(--info); }
-    .toast svg { width: 15px; height: 15px; flex-shrink: 0; }
-    @keyframes toastIn { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+
+    .toast.success {
+      background: rgba(107, 255, 184, .15);
+      border: 1px solid rgba(107, 255, 184, .3);
+      color: var(--success);
+    }
+
+    .toast.error {
+      background: rgba(255, 107, 107, .15);
+      border: 1px solid rgba(255, 107, 107, .3);
+      color: var(--error);
+    }
+
+    .toast.info {
+      background: rgba(107, 181, 255, .15);
+      border: 1px solid rgba(107, 181, 255, .3);
+      color: var(--info);
+    }
+
+    .toast svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
 
     /* ── MODAL ── */
     .modal-overlay {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,.75);
+      background: rgba(0, 0, 0, .75);
       backdrop-filter: blur(8px);
       z-index: 500;
       align-items: center;
       justify-content: center;
     }
-    .modal-overlay.open { display: flex; }
+
+    .modal-overlay.open {
+      display: flex;
+    }
+
     .modal {
       background: #0d0014;
       border: 1px solid var(--border-accent);
@@ -474,27 +1365,96 @@
       max-width: 460px;
       animation: modalIn .2s ease;
     }
-    @keyframes modalIn { from { opacity: 0; transform: scale(.96); } to { opacity: 1; transform: scale(1); } }
-    .modal-title { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
-    .modal-body { font-size: .85rem; color: var(--text-sub); margin-bottom: 24px; line-height: 1.55; }
-    .modal-body strong { color: var(--white); }
-    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
-    .btn { padding: 10px 20px; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 600; cursor: pointer; transition: all .15s; border: none; }
-    .btn-ghost { background: var(--surface); border: 1px solid var(--border); color: var(--text-sub); }
-    .btn-ghost:hover { background: var(--surface2); color: var(--white); }
-    .btn-danger { background: rgba(255,107,107,.15); border: 1px solid rgba(255,107,107,.3); color: var(--error); }
-    .btn-danger:hover { background: rgba(255,107,107,.25); }
-    .btn-primary { background: linear-gradient(135deg, var(--purple-mid), var(--purple-light)); color: white; }
-    .btn-primary:hover { opacity: .9; }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(.96);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .modal-body {
+      font-size: .85rem;
+      color: var(--text-sub);
+      margin-bottom: 24px;
+      line-height: 1.55;
+    }
+
+    .modal-body strong {
+      color: var(--white);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .15s;
+      border: none;
+    }
+
+    .btn-ghost {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text-sub);
+    }
+
+    .btn-ghost:hover {
+      background: var(--surface2);
+      color: var(--white);
+    }
+
+    .btn-danger {
+      background: rgba(255, 107, 107, .15);
+      border: 1px solid rgba(255, 107, 107, .3);
+      color: var(--error);
+    }
+
+    .btn-danger:hover {
+      background: rgba(255, 107, 107, .25);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--purple-mid), var(--purple-light));
+      color: white;
+    }
+
+    .btn-primary:hover {
+      opacity: .9;
+    }
 
     /* ── LOADING SKELETON ── */
     .skeleton {
-      background: linear-gradient(90deg, rgba(255,255,255,.04) 25%, rgba(255,255,255,.08) 50%, rgba(255,255,255,.04) 75%);
+      background: linear-gradient(90deg, rgba(255, 255, 255, .04) 25%, rgba(255, 255, 255, .08) 50%, rgba(255, 255, 255, .04) 75%);
       background-size: 200% 100%;
       animation: shimmer 1.5s infinite;
       border-radius: 6px;
     }
-    @keyframes shimmer { to { background-position: -200% 0; } }
+
+    @keyframes shimmer {
+      to {
+        background-position: -200% 0;
+      }
+    }
 
     /* ── CHARTS (pure CSS) ── */
     .mini-chart {
@@ -503,13 +1463,17 @@
       gap: 3px;
       height: 36px;
     }
+
     .mini-bar {
       flex: 1;
-      background: rgba(166,108,255,.25);
+      background: rgba(166, 108, 255, .25);
       border-radius: 3px 3px 0 0;
       transition: background .2s;
     }
-    .mini-bar:hover { background: rgba(166,108,255,.5); }
+
+    .mini-bar:hover {
+      background: rgba(166, 108, 255, .5);
+    }
 
     /* ── OVERVIEW GRID ── */
     .overview-grid {
@@ -526,12 +1490,13 @@
       gap: 8px;
       padding: 16px 22px 20px;
     }
+
     .tag-chip {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(166,108,255,.08);
-      border: 1px solid rgba(166,108,255,.18);
+      background: rgba(166, 108, 255, .08);
+      border: 1px solid rgba(166, 108, 255, .18);
       border-radius: 20px;
       padding: 5px 12px;
       font-size: .78rem;
@@ -540,26 +1505,36 @@
       transition: all .15s;
       position: relative;
     }
-    .tag-chip:hover { background: rgba(166,108,255,.15); border-color: rgba(166,108,255,.35); }
+
+    .tag-chip:hover {
+      background: rgba(166, 108, 255, .15);
+      border-color: rgba(166, 108, 255, .35);
+    }
+
     .tag-chip .tag-count {
-      background: rgba(166,108,255,.2);
+      background: rgba(166, 108, 255, .2);
       border-radius: 10px;
       padding: 1px 6px;
       font-size: .65rem;
       font-weight: 700;
     }
+
     .tag-chip .tag-del {
-      width: 16px; height: 16px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(255,107,107,.2);
+      background: rgba(255, 107, 107, .2);
       color: var(--error);
       font-size: .65rem;
       cursor: pointer;
     }
-    .tag-chip:hover .tag-del { display: flex; }
+
+    .tag-chip:hover .tag-del {
+      display: flex;
+    }
 
     /* ── ADD FORM ── */
     .add-row {
@@ -567,9 +1542,10 @@
       gap: 8px;
       padding: 0 22px 16px;
     }
+
     .add-input {
       flex: 1;
-      background: rgba(255,255,255,.05);
+      background: rgba(255, 255, 255, .05);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 8px 12px;
@@ -578,11 +1554,18 @@
       color: var(--white);
       outline: none;
     }
-    .add-input:focus { border-color: var(--border-accent); }
-    .add-input::placeholder { color: var(--text-muted); }
+
+    .add-input:focus {
+      border-color: var(--border-accent);
+    }
+
+    .add-input::placeholder {
+      color: var(--text-muted);
+    }
+
     .btn-add {
       padding: 8px 16px;
-      background: rgba(166,108,255,.15);
+      background: rgba(166, 108, 255, .15);
       border: 1px solid var(--border-accent);
       border-radius: 8px;
       color: var(--purple-soft);
@@ -593,11 +1576,15 @@
       transition: all .15s;
       white-space: nowrap;
     }
-    .btn-add:hover { background: rgba(166,108,255,.25); }
+
+    .btn-add:hover {
+      background: rgba(166, 108, 255, .25);
+    }
 
     /* ── LOADING SCREEN ── */
     #loading-screen {
-      position: fixed; inset: 0;
+      position: fixed;
+      inset: 0;
       background: var(--bg);
       z-index: 9999;
       display: flex;
@@ -606,162 +1593,385 @@
       flex-direction: column;
       gap: 16px;
     }
+
     #loading-screen .lds {
       font-family: 'Great Vibes', cursive;
       font-size: 2.5rem;
       color: var(--purple-soft);
     }
+
     .loading-dot {
-      display: flex; gap: 6px;
+      display: flex;
+      gap: 6px;
     }
+
     .loading-dot span {
-      width: 6px; height: 6px;
+      width: 6px;
+      height: 6px;
       background: var(--purple-light);
       border-radius: 50%;
       animation: dot 1.2s ease-in-out infinite;
     }
-    .loading-dot span:nth-child(2) { animation-delay: .2s; }
-    .loading-dot span:nth-child(3) { animation-delay: .4s; }
-    @keyframes dot { 0%,80%,100% { transform: scale(.6); opacity:.4; } 40% { transform: scale(1); opacity:1; } }
+
+    .loading-dot span:nth-child(2) {
+      animation-delay: .2s;
+    }
+
+    .loading-dot span:nth-child(3) {
+      animation-delay: .4s;
+    }
+
+    @keyframes dot {
+
+      0%,
+      80%,
+      100% {
+        transform: scale(.6);
+        opacity: .4;
+      }
+
+      40% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
 
     /* Responsive tables */
     @media (max-width: 1200px) {
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .overview-grid { grid-template-columns: 1fr; }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .discussions-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .discussions-messages-panel {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100;
+        border-radius: 0;
+        max-height: 100vh;
+      }
+
+      .discussions-messages-panel .panel-header {
+        border-radius: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .discussions-groups-panel .panel-actions {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .discussions-groups-panel .panel-actions .btn,
+      .discussions-groups-panel .panel-actions .search-input,
+      .discussions-groups-panel .panel-actions .filter-select {
+        width: 100%;
+      }
+
+      .messages-list {
+        max-height: 50vh;
+      }
+
+      .reply-form {
+        flex-direction: column;
+      }
+
+      .reply-form textarea {
+        width: 100%;
+      }
+
+      .reply-form .btn {
+        width: 100%;
+        justify-content: center;
+      }
     }
   </style>
 </head>
+
 <body>
 
-<!-- Loading screen -->
-<div id="loading-screen">
-  <div class="lds">Mia Darling</div>
-  <div class="loading-dot"><span></span><span></span><span></span></div>
-</div>
-
-<!-- Toast container -->
-<div id="toast-container"></div>
-
-<!-- Confirm Modal -->
-<div class="modal-overlay" id="confirmModal">
-  <div class="modal">
-    <div class="modal-title" id="modalTitle">Confirmer l'action</div>
-    <div class="modal-body" id="modalBody"></div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
-      <button class="btn btn-danger" id="modalConfirmBtn">Confirmer</button>
-    </div>
-  </div>
-</div>
-
-<!-- Sidebar -->
-<div class="sidebar">
-  <div class="sidebar-logo">
-    <div class="wordmark">Mia <span>Darling</span></div>
-    <span class="badge">⬡ Administration</span>
+  <!-- Loading screen -->
+  <div id="loading-screen">
+    <div class="lds">Mia Darling</div>
+    <div class="loading-dot"><span></span><span></span><span></span></div>
   </div>
 
-  <nav class="sidebar-nav">
-    <span class="nav-section-label">Général</span>
-    <div class="nav-item active" onclick="showSection('dashboard')" id="nav-dashboard">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-      Tableau de bord
-    </div>
+  <!-- Toast container -->
+  <div id="toast-container"></div>
 
-    <span class="nav-section-label">Contenu</span>
-    <div class="nav-item" onclick="showSection('posts')" id="nav-posts">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Témoignages
-      <span class="nav-badge green" id="badge-posts">—</span>
-    </div>
-    <div class="nav-item" onclick="showSection('comments')" id="nav-comments">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Commentaires
-      <span class="nav-badge" id="badge-comments">—</span>
-    </div>
-
-    <span class="nav-section-label">Communauté</span>
-    <div class="nav-item" onclick="showSection('sessions')" id="nav-sessions">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Sessions
-    </div>
-    <div class="nav-item" onclick="showSection('banned')" id="nav-banned">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
-      Bannis
-      <span class="nav-badge" id="badge-banned">—</span>
-    </div>
-
-    <span class="nav-section-label">Paramètres</span>
-    <div class="nav-item" onclick="showSection('tags')" id="nav-tags">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-      Tags & Humeurs
-    </div>
-    <div class="nav-item" onclick="showSection('admins')" id="nav-admins">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-      Administrateurs
-    </div>
-  </nav>
-
-  <div class="sidebar-footer">
-    <div class="admin-pill">
-      <div class="admin-avatar" id="adminAvatarInitial">A</div>
-      <div class="admin-info">
-        <div class="admin-name" id="adminEmail">Admin</div>
-        <div class="admin-role">Super Admin</div>
+  <!-- Confirm Modal -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="modal">
+      <div class="modal-title" id="modalTitle">Confirmer l'action</div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeModal()">Annuler</button>
+        <button class="btn btn-danger" id="modalConfirmBtn">Confirmer</button>
       </div>
-      <button class="logout-btn" onclick="adminLogout()" title="Déconnexion">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- Main content -->
-<div class="main">
-  <div class="topbar">
-    <div class="topbar-title" id="topbarTitle">Tableau de bord <span>Vue d'ensemble</span></div>
-    <div class="topbar-actions">
-      <button class="refresh-btn" onclick="refreshCurrentSection()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-        Actualiser
-      </button>
     </div>
   </div>
 
-  <div class="content">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="wordmark">Mia <span>Darling</span></div>
+      <span class="badge"><i data-lucide="shield" style="width:12px;height:12px;"></i> Administration</span>
+    </div>
 
-    <!-- ═══════════════════════════════════ DASHBOARD ═══ -->
-    <div class="section active" id="section-dashboard">
-      <div class="stats-grid">
-        <div class="stat-card purple">
-          <div class="stat-icon purple">📝</div>
-          <div class="stat-value" id="stat-posts">—</div>
-          <div class="stat-label">Témoignages publiés</div>
-        </div>
-        <div class="stat-card green">
-          <div class="stat-icon green">👤</div>
-          <div class="stat-value" id="stat-sessions">—</div>
-          <div class="stat-label">Sessions actives (30j)</div>
-        </div>
-        <div class="stat-card blue">
-          <div class="stat-icon blue">💬</div>
-          <div class="stat-value" id="stat-comments">—</div>
-          <div class="stat-label">Commentaires</div>
-        </div>
-        <div class="stat-card orange">
-          <div class="stat-icon orange">🚫</div>
-          <div class="stat-value" id="stat-banned">—</div>
-          <div class="stat-label">Sessions bannies</div>
-        </div>
+    <nav class="sidebar-nav">
+      <span class="nav-section-label">Général</span>
+      <div class="nav-item active" onclick="showSection('dashboard')" id="nav-dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7" />
+          <rect x="14" y="3" width="7" height="7" />
+          <rect x="3" y="14" width="7" height="7" />
+          <rect x="14" y="14" width="7" height="7" />
+        </svg>
+        Tableau de bord
       </div>
 
-      <div class="overview-grid">
-        <!-- Recent posts -->
+      <span class="nav-section-label">Contenu</span>
+      <div class="nav-item" onclick="showSection('posts')" id="nav-posts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+          <polyline points="14 2 14 8 20 8" />
+        </svg>
+        Témoignages
+        <span class="nav-badge green" id="badge-posts">—</span>
+      </div>
+      <div class="nav-item" onclick="showSection('comments')" id="nav-comments">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg>
+        Commentaires
+        <span class="nav-badge" id="badge-comments">—</span>
+      </div>
+
+      <span class="nav-section-label">Communauté</span>
+      <div class="nav-item" onclick="showSection('sessions')" id="nav-sessions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+        Sessions
+      </div>
+      <div class="nav-item" onclick="showSection('banned')" id="nav-banned">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+        </svg>
+        Bannis
+        <span class="nav-badge" id="badge-banned">—</span>
+      </div>
+      <div class="nav-item" onclick="showSection('discussions')" id="nav-discussions">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          <path d="M8 10h8" />
+          <path d="M8 14h4" />
+        </svg>
+        Discussions
+        <span class="nav-badge" id="badge-discussions">—</span>
+      </div>
+
+      <span class="nav-section-label">Paramètres</span>
+      <div class="nav-item" onclick="showSection('tags')" id="nav-tags">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+          <line x1="7" y1="7" x2="7.01" y2="7" />
+        </svg>
+        Tags & Humeurs
+      </div>
+      <div class="nav-item" onclick="showSection('admins')" id="nav-admins">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+        Administrateurs
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="admin-pill">
+        <div class="admin-avatar" id="adminAvatarInitial">A</div>
+        <div class="admin-info">
+          <div class="admin-name" id="adminEmail">Admin</div>
+          <div class="admin-role">Super Admin</div>
+        </div>
+        <button class="logout-btn" onclick="adminLogout()" title="Déconnexion">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="topbarTitle">Tableau de bord <span>Vue d'ensemble</span></div>
+      <div class="topbar-actions">
+        <button class="refresh-btn" onclick="refreshCurrentSection()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M23 4v6h-6" />
+            <path d="M1 20v-6h6" />
+            <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+          </svg>
+          Actualiser
+        </button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ═══════════════════════════════════ DASHBOARD ═══ -->
+      <div class="section active" id="section-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card purple">
+            <div class="stat-icon purple"><i data-lucide="file-text"></i></div>
+            <div class="stat-value" id="stat-posts">—</div>
+            <div class="stat-label">Témoignages publiés</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-icon green"><i data-lucide="users"></i></div>
+            <div class="stat-value" id="stat-sessions">—</div>
+            <div class="stat-label">Sessions actives (30j)</div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-icon blue"><i data-lucide="message-square"></i></div>
+            <div class="stat-value" id="stat-comments">—</div>
+            <div class="stat-label">Commentaires</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-icon orange"><i data-lucide="shield-ban"></i></div>
+            <div class="stat-value" id="stat-banned">—</div>
+            <div class="stat-label">Sessions bannies</div>
+          </div>
+        </div>
+
+        <div class="overview-grid">
+          <!-- Recent posts -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Témoignages récents</div>
+                <div class="panel-meta">Les 10 derniers publiés</div>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Contenu</th>
+                    <th>Auteur</th>
+                    <th>Vues</th>
+                    <th>Réactions</th>
+                    <th>Date</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="recent-posts-table">
+                  <tr>
+                    <td colspan="6">
+                      <div class="empty-state">
+                        <p>Chargement…</p>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Quick stats panel -->
+          <div class="panel">
+            <div class="panel-header">
+              <div>
+                <div class="panel-title">Tags populaires</div>
+                <div class="panel-meta">Top 10 tags</div>
+              </div>
+            </div>
+            <div id="top-tags-list" style="padding: 8px 0;">
+              <div style="padding:16px 22px; color: var(--text-muted); font-size: .82rem;">Chargement…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════ POSTS ═══ -->
+      <div class="section" id="section-posts">
         <div class="panel">
           <div class="panel-header">
             <div>
-              <div class="panel-title">Témoignages récents</div>
-              <div class="panel-meta">Les 10 derniers publiés</div>
+              <div class="panel-title">Tous les témoignages</div>
+              <div class="panel-meta" id="posts-count-label">Chargement…</div>
+            </div>
+            <div class="panel-actions">
+              <input class="search-input" id="posts-search" placeholder="Rechercher…" oninput="filterPosts()" />
+              <select class="filter-select" id="posts-filter" onchange="loadPosts()">
+                <option value="all">Tous</option>
+                <option value="published">Publiés</option>
+                <option value="deleted">Supprimés</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Contenu</th>
+                  <th>Auteur</th>
+                  <th>Statut</th>
+                  <th>Vues</th>
+                  <th>Réactions</th>
+                  <th>Cmts</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="posts-table-body">
+                <tr>
+                  <td colspan="9">
+                    <div class="empty-state">
+                      <p>Chargement…</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════ COMMENTS ═══ -->
+      <div class="section" id="section-comments">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Commentaires</div>
+              <div class="panel-meta" id="comments-count-label">Chargement…</div>
+            </div>
+            <div class="panel-actions">
+              <input class="search-input" id="comments-search" placeholder="Rechercher…" oninput="filterComments()" />
+              <select class="filter-select" id="comments-filter" onchange="loadComments()">
+                <option value="all">Tous</option>
+                <option value="visible">Visibles</option>
+                <option value="deleted">Supprimés</option>
+              </select>
             </div>
           </div>
           <div class="table-wrap">
@@ -770,366 +1980,465 @@
                 <tr>
                   <th>Contenu</th>
                   <th>Auteur</th>
-                  <th>Vues</th>
-                  <th>Réactions</th>
+                  <th>Post lié</th>
+                  <th>Statut</th>
+                  <th>Likes</th>
                   <th>Date</th>
-                  <th></th>
+                  <th>Actions</th>
                 </tr>
               </thead>
-              <tbody id="recent-posts-table">
-                <tr><td colspan="6"><div class="empty-state"><p>Chargement…</p></div></td></tr>
+              <tbody id="comments-table-body">
+                <tr>
+                  <td colspan="7">
+                    <div class="empty-state">
+                      <p>Chargement…</p>
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
         </div>
+      </div>
 
-        <!-- Quick stats panel -->
+      <!-- ═══════════════════════════════════ SESSIONS ═══ -->
+      <div class="section" id="section-sessions">
         <div class="panel">
           <div class="panel-header">
             <div>
-              <div class="panel-title">Tags populaires</div>
-              <div class="panel-meta">Top 10 tags</div>
+              <div class="panel-title">Sessions anonymes</div>
+              <div class="panel-meta" id="sessions-count-label">Chargement…</div>
+            </div>
+            <div class="panel-actions">
+              <input class="search-input" id="sessions-search" placeholder="Nom anonyme…" oninput="filterSessions()" />
             </div>
           </div>
-          <div id="top-tags-list" style="padding: 8px 0;">
-            <div style="padding:16px 22px; color: var(--text-muted); font-size: .82rem;">Chargement…</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nom anonyme</th>
+                  <th>Token </th>
+                  <th>Posts</th>
+                  <th>Commentaires</th>
+                  <th>Dernière activité</th>
+                  <th>Statut</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="sessions-table-body">
+                <tr>
+                  <td colspan="7">
+                    <div class="empty-state">
+                      <p>Chargement…</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- ═══════════════════════════════════ POSTS ═══ -->
-    <div class="section" id="section-posts">
-      <div class="panel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title">Tous les témoignages</div>
-            <div class="panel-meta" id="posts-count-label">Chargement…</div>
-          </div>
-          <div class="panel-actions">
-            <input class="search-input" id="posts-search" placeholder="Rechercher…" oninput="filterPosts()" />
-            <select class="filter-select" id="posts-filter" onchange="loadPosts()">
-              <option value="all">Tous</option>
-              <option value="published">Publiés</option>
-              <option value="deleted">Supprimés</option>
-            </select>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Contenu</th>
-                <th>Auteur</th>
-                <th>Statut</th>
-                <th>Vues</th>
-                <th>Réactions</th>
-                <th>Cmts</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="posts-table-body">
-              <tr><td colspan="9"><div class="empty-state"><p>Chargement…</p></div></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════ COMMENTS ═══ -->
-    <div class="section" id="section-comments">
-      <div class="panel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title">Commentaires</div>
-            <div class="panel-meta" id="comments-count-label">Chargement…</div>
-          </div>
-          <div class="panel-actions">
-            <input class="search-input" id="comments-search" placeholder="Rechercher…" oninput="filterComments()" />
-            <select class="filter-select" id="comments-filter" onchange="loadComments()">
-              <option value="all">Tous</option>
-              <option value="visible">Visibles</option>
-              <option value="deleted">Supprimés</option>
-            </select>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Contenu</th>
-                <th>Auteur</th>
-                <th>Post lié</th>
-                <th>Statut</th>
-                <th>Likes</th>
-                <th>Date</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="comments-table-body">
-              <tr><td colspan="7"><div class="empty-state"><p>Chargement…</p></div></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════ SESSIONS ═══ -->
-    <div class="section" id="section-sessions">
-      <div class="panel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title">Sessions anonymes</div>
-            <div class="panel-meta" id="sessions-count-label">Chargement…</div>
-          </div>
-          <div class="panel-actions">
-            <input class="search-input" id="sessions-search" placeholder="Nom anonyme…" oninput="filterSessions()" />
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Nom anonyme</th>
-                <th>Token (extrait)</th>
-                <th>Posts</th>
-                <th>Commentaires</th>
-                <th>Dernière activité</th>
-                <th>Statut</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="sessions-table-body">
-              <tr><td colspan="7"><div class="empty-state"><p>Chargement…</p></div></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════ BANNED ═══ -->
-    <div class="section" id="section-banned">
-      <div class="panel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title">Sessions bannies</div>
-            <div class="panel-meta" id="banned-count-label">Utilisateurs bannis de la plateforme</div>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Nom anonyme</th>
-                <th>Raison du ban</th>
-                <th>Posts</th>
-                <th>Dernière activité</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="banned-table-body">
-              <tr><td colspan="5"><div class="empty-state"><p>Chargement…</p></div></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══════════════════════════════════ TAGS & MOODS ═══ -->
-    <div class="section" id="section-tags">
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-        <!-- Tags -->
+      <!-- ═══════════════════════════════════ BANNED ═══ -->
+      <div class="section" id="section-banned">
         <div class="panel">
           <div class="panel-header">
-            <div class="panel-title">Tags</div>
-            <div class="panel-meta" id="tags-count"></div>
+            <div>
+              <div class="panel-title">Sessions bannies</div>
+              <div class="panel-meta" id="banned-count-label">Utilisateurs bannis de la plateforme</div>
+            </div>
           </div>
-          <div class="add-row">
-            <input class="add-input" id="new-tag-input" placeholder="Nouveau tag…" />
-            <button class="btn-add" onclick="addTag()">+ Ajouter</button>
-          </div>
-          <div class="tags-grid" id="tags-container">
-            <div style="color: var(--text-muted); font-size:.82rem;">Chargement…</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nom anonyme</th>
+                  <th>Raison du ban</th>
+                  <th>Posts</th>
+                  <th>Dernière activité</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="banned-table-body">
+                <tr>
+                  <td colspan="5">
+                    <div class="empty-state">
+                      <p>Chargement…</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
+      </div>
 
-        <!-- Moods -->
+      <!-- ═══════════════════════════════════ DISCUSSIONS ═══ -->
+      <div class="section" id="section-discussions">
+        <div class="chat-app">
+          <!-- Sidebar: Groups List -->
+          <aside class="chat-sidebar" id="chatSidebar">
+            <div class="chat-sidebar-header">
+              <div class="chat-sidebar-top">
+                <div class="chat-sidebar-title">Groupes</div>
+                <div class="chat-sidebar-actions">
+                  <button class="icon-btn" onclick="openCreateGroupModal()" title="Créer un groupe"
+                    id="create-group-btn2" style="display:none;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      style="width:18px;height:18px;">
+                      <line x1="12" y1="5" x2="12" y2="19" />
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              <div class="chat-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg>
+                <input type="text" placeholder="Rechercher un groupe..." id="groups-search" oninput="filterGroups()">
+              </div>
+            </div>
+
+            <div class="chat-stats-bar">
+              <div class="chat-stat">
+                <div class="chat-stat-value" id="chat-stat-groups">0</div>
+                <div class="chat-stat-label">Groupes</div>
+              </div>
+              <div class="chat-stat">
+                <div class="chat-stat-value" id="chat-stat-members">0</div>
+                <div class="chat-stat-label">Membres</div>
+              </div>
+              <div class="chat-stat">
+                <div class="chat-stat-value" id="chat-stat-messages">0</div>
+                <div class="chat-stat-label">Messages</div>
+              </div>
+            </div>
+
+            <div class="chat-groups-list" id="chatGroupsList">
+              <div style="padding:20px;text-align:center;color:var(--text-muted);">Chargement…</div>
+            </div>
+          </aside>
+
+          <!-- Main: Chat Area -->
+          <main class="chat-main" id="chatMain">
+            <!-- Empty State -->
+            <div class="chat-empty" id="chatEmpty">
+              <div class="chat-empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                </svg>
+              </div>
+              <div class="chat-empty-title">Modération des Groupes</div>
+              <div class="chat-empty-desc">Sélectionnez un groupe pour voir les messages et répondre aux utilisateurs
+              </div>
+            </div>
+
+            <!-- Chat Content -->
+            <div id="chatContent" style="display:none;flex-direction:column;height:100%;">
+              <div class="chat-header">
+                <div class="chat-header-left">
+                  <button class="chat-back-btn" onclick="closeChatPanel()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      style="width:18px;height:18px;">
+                      <polyline points="15 18 9 12 15 6" />
+                    </svg>
+                  </button>
+                  <div class="chat-header-info">
+                    <h3 id="chatHeaderTitle">Groupe</h3>
+                    <div class="chat-header-meta">
+                      <span id="chatHeaderMembers">0 membres</span>
+                      <span>•</span>
+                      <span id="chatHeaderStatus" class="chat-group-badge active">Actif</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-header-actions">
+                  <button class="chat-header-btn" id="chatToggleBtn" onclick="toggleGroupStatus()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      style="width:14px;height:14px;">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    <span id="chatToggleText">Fermer</span>
+                  </button>
+                  <button class="chat-header-btn danger" onclick="confirmDeleteCurrentGroup()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      style="width:14px;height:14px;">
+                      <polyline points="3 6 5 6 21 6" />
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                    </svg>
+                    Supprimer
+                  </button>
+                </div>
+              </div>
+
+              <div class="chat-messages" id="chatMessages"></div>
+
+              <div class="chat-input-area">
+                <div class="chat-input-container">
+                  <div class="chat-input-wrapper">
+                    <textarea class="chat-input" id="chatInput" placeholder="Répondre en tant qu'admin..." rows="1"
+                      onkeydown="handleChatKeydown(event)" oninput="autoResizeChatInput(this)"></textarea>
+                  </div>
+                  <button class="chat-send-btn" onclick="sendChatMessage()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                      style="width:18px;height:18px;">
+                      <line x1="22" y1="2" x2="11" y2="13" />
+                      <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════ TAGS & MOODS ═══ -->
+      <div class="section" id="section-tags">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <!-- Tags -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Tags</div>
+              <div class="panel-meta" id="tags-count"></div>
+            </div>
+            <div class="add-row">
+              <input class="add-input" id="new-tag-input" placeholder="Nouveau tag…" />
+              <button class="btn-add" onclick="addTag()">+ Ajouter</button>
+            </div>
+            <div class="tags-grid" id="tags-container">
+              <div style="color: var(--text-muted); font-size:.82rem;">Chargement…</div>
+            </div>
+          </div>
+
+          <!-- Moods -->
+          <div class="panel">
+            <div class="panel-header">
+              <div class="panel-title">Humeurs (Moods)</div>
+              <div class="panel-meta" id="moods-count"></div>
+            </div>
+            <div class="add-row">
+              <input class="add-input" id="new-mood-emoji" placeholder="Emoji" style="width:70px; flex:none;" />
+              <input class="add-input" id="new-mood-name" placeholder="Nom humeur…" />
+              <button class="btn-add" onclick="addMood()">+ Ajouter</button>
+            </div>
+            <div class="tags-grid" id="moods-container">
+              <div style="color: var(--text-muted); font-size:.82rem;">Chargement…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════ ADMINS ═══ -->
+      <div class="section" id="section-admins">
         <div class="panel">
           <div class="panel-header">
-            <div class="panel-title">Humeurs (Moods)</div>
-            <div class="panel-meta" id="moods-count"></div>
+            <div>
+              <div class="panel-title">Administrateurs</div>
+              <div class="panel-meta">Gérez les accès au back-office</div>
+            </div>
+            <div class="panel-actions">
+              <button class="btn btn-primary" onclick="openAddAdminModal()">+ Ajouter un admin</button>
+            </div>
           </div>
-          <div class="add-row">
-            <input class="add-input" id="new-mood-emoji" placeholder="Emoji" style="width:70px; flex:none;" />
-            <input class="add-input" id="new-mood-name" placeholder="Nom humeur…" />
-            <button class="btn-add" onclick="addMood()">+ Ajouter</button>
-          </div>
-          <div class="tags-grid" id="moods-container">
-            <div style="color: var(--text-muted); font-size:.82rem;">Chargement…</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Email</th>
+                  <th>Rôle</th>
+                  <th>Statut</th>
+                  <th>Ajouté le</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="admins-table-body">
+                <tr>
+                  <td colspan="5">
+                    <div class="empty-state">
+                      <p>Chargement…</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- ═══════════════════════════════════ ADMINS ═══ -->
-    <div class="section" id="section-admins">
-      <div class="panel">
-        <div class="panel-header">
-          <div>
-            <div class="panel-title">Administrateurs</div>
-            <div class="panel-meta">Gérez les accès au back-office</div>
-          </div>
-          <div class="panel-actions">
-            <button class="btn btn-primary" onclick="openAddAdminModal()">+ Ajouter un admin</button>
-          </div>
-        </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Email</th>
-                <th>Rôle</th>
-                <th>Statut</th>
-                <th>Ajouté le</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="admins-table-body">
-              <tr><td colspan="5"><div class="empty-state"><p>Chargement…</p></div></td></tr>
-            </tbody>
-          </table>
+    </div><!-- /content -->
+  </div><!-- /main -->
+
+  <!-- Add Admin Modal -->
+  <div class="modal-overlay" id="addAdminModal">
+    <div class="modal">
+      <div class="modal-title">Ajouter un administrateur</div>
+      <div class="modal-body">
+        <div class="field" style="margin-bottom:14px;">
+          <label
+            style="font-size:.78rem;font-weight:500;color:var(--text-sub);display:block;margin-bottom:6px;">Email</label>
+          <input type="email" id="new-admin-email" class="add-input" placeholder="admin@exemple.com"
+            style="width:100%;border-radius:10px;padding:11px 14px;" />
         </div>
       </div>
-    </div>
-
-  </div><!-- /content -->
-</div><!-- /main -->
-
-<!-- Add Admin Modal -->
-<div class="modal-overlay" id="addAdminModal">
-  <div class="modal">
-    <div class="modal-title">Ajouter un administrateur</div>
-    <div class="modal-body">
-      <div class="field" style="margin-bottom:14px;">
-        <label style="font-size:.78rem;font-weight:500;color:var(--text-sub);display:block;margin-bottom:6px;">Email</label>
-        <input type="email" id="new-admin-email" class="add-input" placeholder="admin@exemple.com" style="width:100%;border-radius:10px;padding:11px 14px;" />
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeAddAdminModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="addAdmin()">Ajouter</button>
       </div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeAddAdminModal()">Annuler</button>
-      <button class="btn btn-primary" onclick="addAdmin()">Ajouter</button>
     </div>
   </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="js/admin-config.js"></script>
-<script>
-// ═══════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════
-let allPosts = [];
-let allComments = [];
-let allSessions = [];
-let currentSection = 'dashboard';
+  <!-- Create Group Modal -->
+  <div class="modal-overlay" id="createGroupModal">
+    <div class="modal">
+      <div class="modal-title">Créer un groupe de discussion</div>
+      <div class="modal-body">
+        <div class="field" style="margin-bottom:14px;">
+          <label style="font-size:.78rem;font-weight:500;color:var(--text-sub);display:block;margin-bottom:6px;">Nom du
+            groupe</label>
+          <input type="text" id="new-group-name" class="add-input" placeholder="Ex: Support technique"
+            style="width:100%;border-radius:10px;padding:11px 14px;" maxlength="100" />
+        </div>
+        <div class="field" style="margin-bottom:14px;">
+          <label
+            style="font-size:.78rem;font-weight:500;color:var(--text-sub);display:block;margin-bottom:6px;">Description
+            (optionnelle)</label>
+          <textarea id="new-group-description" class="add-input" placeholder="Description du groupe..."
+            style="width:100%;border-radius:10px;padding:11px 14px;min-height:80px;resize:vertical;"
+            rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closeCreateGroupModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="createGroup()">Créer</button>
+      </div>
+    </div>
+  </div>
 
-// ═══════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════
-window.addEventListener('load', async () => {
-  const auth = await requireAdminAuth();
-  if (!auth) return;
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/admin-config.js"></script>
+  <script>
+    let allPosts = [];
+    let allComments = [];
+    let allSessions = [];
+    let allGroups = [];
+    let currentGroupId = null;
+    let currentSection = 'dashboard';
+    let currentAdminId = null;
+    let currentAdminRole = null;
 
-  // Show admin info
-  const email = auth.session.user.email;
-  document.getElementById('adminEmail').textContent = email;
-  document.getElementById('adminAvatarInitial').textContent = email[0].toUpperCase();
+    window.addEventListener('load', async () => {
+      if (window.lucide) lucide.createIcons();
+      const auth = await requireAdminAuth();
+      if (!auth) return;
 
-  // Load initial data
-  await loadDashboard();
+      // Show admin info
+      const email = auth.session.user.email;
+      document.getElementById('adminEmail').textContent = email;
+      document.getElementById('adminAvatarInitial').textContent = email[0].toUpperCase();
 
-  // Hide loading
-  document.getElementById('loading-screen').style.display = 'none';
-});
+      // Get admin role for permissions
+      const { data: adminData } = await adminSupabase
+        .from('admin_users').select('id,role').eq('email', email).single();
+      if (adminData) {
+        currentAdminId = adminData.id;
+        currentAdminRole = adminData.role;
+        // Show create group button for super_admin only
+        if (adminData.role === 'super_admin') {
+          document.getElementById('create-group-btn2').style.display = 'inline-flex';
+        }
+      }
 
-// ═══════════════════════════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════════════════════════
-const sectionTitles = {
-  dashboard: 'Tableau de bord <span>Vue d\'ensemble</span>',
-  posts: 'Témoignages <span>Modération du contenu</span>',
-  comments: 'Commentaires <span>Modération</span>',
-  sessions: 'Sessions <span>Gestion des utilisateurs</span>',
-  banned: 'Utilisateurs bannis <span>Gestion des restrictions</span>',
-  tags: 'Tags & Humeurs <span>Paramètres du contenu</span>',
-  admins: 'Administrateurs <span>Gestion des accès</span>',
-};
+      // Load initial data
+      await loadDashboard();
 
-function showSection(name) {
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('section-' + name).classList.add('active');
-  document.getElementById('nav-' + name).classList.add('active');
-  document.getElementById('topbarTitle').innerHTML = sectionTitles[name] || name;
-  currentSection = name;
+      // Hide loading
+      document.getElementById('loading-screen').style.display = 'none';
+    });
 
-  // Lazy load section data
-  if (name === 'posts') loadPosts();
-  else if (name === 'comments') loadComments();
-  else if (name === 'sessions') loadSessions();
-  else if (name === 'banned') loadBanned();
-  else if (name === 'tags') loadTagsAndMoods();
-  else if (name === 'admins') loadAdmins();
-}
+    // ═══════════════════════════════════════════════════
+    // NAVIGATION
+    // ═══════════════════════════════════════════════════
+    const sectionTitles = {
+      dashboard: 'Tableau de bord <span>Vue d\'ensemble</span>',
+      posts: 'Témoignages <span>Modération du contenu</span>',
+      comments: 'Commentaires <span>Modération</span>',
+      sessions: 'Sessions <span>Gestion des utilisateurs</span>',
+      banned: 'Utilisateurs bannis <span>Gestion des restrictions</span>',
+      discussions: 'Discussions <span>Gestion des groupes</span>',
+      tags: 'Tags & Humeurs <span>Paramètres du contenu</span>',
+      admins: 'Administrateurs <span>Gestion des accès</span>',
+    };
 
-function refreshCurrentSection() {
-  if (currentSection === 'dashboard') loadDashboard();
-  else showSection(currentSection);
-}
+    function showSection(name) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById('section-' + name).classList.add('active');
+      document.getElementById('nav-' + name).classList.add('active');
+      document.getElementById('topbarTitle').innerHTML = sectionTitles[name] || name;
+      currentSection = name;
 
-// ═══════════════════════════════════════════════════
-// DASHBOARD
-// ═══════════════════════════════════════════════════
-async function loadDashboard() {
-  try {
-    // Fetch counts in parallel
-    const [postsRes, sessionsRes, commentsRes, bannedRes, recentPostsRes, topTagsRes] = await Promise.all([
-      adminSupabase.from('posts').select('*', { count: 'exact', head: true }).eq('status', 'published'),
-      adminSupabase.from('anonymous_sessions').select('*', { count: 'exact', head: true })
-        .gte('last_activity_at', new Date(Date.now() - 30*24*60*60*1000).toISOString()),
-      adminSupabase.from('comments').select('*', { count: 'exact', head: true }).eq('status', 'visible'),
-      adminSupabase.from('anonymous_sessions').select('*', { count: 'exact', head: true }).eq('is_banned', true),
-      adminSupabase.from('posts').select('id,content,session_token,views_count,reactions_count,comments_count,created_at,status')
-        .eq('status', 'published').order('created_at', { ascending: false }).limit(10),
-      adminSupabase.from('tags').select('name,usage_count').order('usage_count', { ascending: false }).limit(10),
-    ]);
-
-    document.getElementById('stat-posts').textContent = (postsRes.count || 0).toLocaleString('fr');
-    document.getElementById('stat-sessions').textContent = (sessionsRes.count || 0).toLocaleString('fr');
-    document.getElementById('stat-comments').textContent = (commentsRes.count || 0).toLocaleString('fr');
-    document.getElementById('stat-banned').textContent = (bannedRes.count || 0).toLocaleString('fr');
-
-    // Update nav badges
-    document.getElementById('badge-posts').textContent = postsRes.count || 0;
-    document.getElementById('badge-comments').textContent = commentsRes.count || 0;
-    document.getElementById('badge-banned').textContent = bannedRes.count || 0;
-
-    // Recent posts table
-    const recentPosts = recentPostsRes.data || [];
-    const sessionTokens = [...new Set(recentPosts.map(p => p.session_token).filter(Boolean))];
-    let nameMap = {};
-    if (sessionTokens.length) {
-      const { data: sessions } = await adminSupabase
-        .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', sessionTokens);
-      (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
+      // Lazy load section data
+      if (name === 'posts') loadPosts();
+      else if (name === 'comments') loadComments();
+      else if (name === 'sessions') loadSessions();
+      else if (name === 'banned') loadBanned();
+      else if (name === 'discussions') loadDiscussions();
+      else if (name === 'tags') loadTagsAndMoods();
+      else if (name === 'admins') loadAdmins();
     }
 
-    const tbody = document.getElementById('recent-posts-table');
-    tbody.innerHTML = recentPosts.length === 0
-      ? `<tr><td colspan="6"><div class="empty-state"><p>Aucun témoignage</p></div></td></tr>`
-      : recentPosts.map(p => `
+    function refreshCurrentSection() {
+      if (currentSection === 'dashboard') loadDashboard();
+      else showSection(currentSection);
+    }
+
+    // ═══════════════════════════════════════════════════
+    // DASHBOARD
+    // ═══════════════════════════════════════════════════
+    async function loadDashboard() {
+      try {
+        // Fetch counts in parallel
+        const [postsRes, sessionsRes, commentsRes, bannedRes, recentPostsRes, topTagsRes] = await Promise.all([
+          adminSupabase.from('posts').select('*', { count: 'exact', head: true }).eq('status', 'published'),
+          adminSupabase.from('anonymous_sessions').select('*', { count: 'exact', head: true })
+            .gte('last_activity_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString()),
+          adminSupabase.from('comments').select('*', { count: 'exact', head: true }).eq('status', 'visible'),
+          adminSupabase.from('anonymous_sessions').select('*', { count: 'exact', head: true }).eq('is_banned', true),
+          adminSupabase.from('posts').select('id,content,session_token,views_count,reactions_count,comments_count,created_at,status')
+            .eq('status', 'published').order('created_at', { ascending: false }).limit(10),
+          adminSupabase.from('tags').select('name,usage_count').order('usage_count', { ascending: false }).limit(10),
+        ]);
+
+        document.getElementById('stat-posts').textContent = (postsRes.count || 0).toLocaleString('fr');
+        document.getElementById('stat-sessions').textContent = (sessionsRes.count || 0).toLocaleString('fr');
+        document.getElementById('stat-comments').textContent = (commentsRes.count || 0).toLocaleString('fr');
+        document.getElementById('stat-banned').textContent = (bannedRes.count || 0).toLocaleString('fr');
+
+        // Update nav badges
+        document.getElementById('badge-posts').textContent = postsRes.count || 0;
+        document.getElementById('badge-comments').textContent = commentsRes.count || 0;
+        document.getElementById('badge-banned').textContent = bannedRes.count || 0;
+
+        // Recent posts table
+        const recentPosts = recentPostsRes.data || [];
+        const sessionTokens = [...new Set(recentPosts.map(p => p.session_token).filter(Boolean))];
+        let nameMap = {};
+        if (sessionTokens.length) {
+          const { data: sessions } = await adminSupabase
+            .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', sessionTokens);
+          (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
+        }
+
+        const tbody = document.getElementById('recent-posts-table');
+        tbody.innerHTML = recentPosts.length === 0
+          ? `<tr><td colspan="6"><div class="empty-state"><p>Aucun témoignage</p></div></td></tr>`
+          : recentPosts.map(p => `
         <tr>
           <td><div class="cell-text"><strong>${escapeHtml(truncate(p.content, 60))}</strong></div></td>
           <td>${escapeHtml(nameMap[p.session_token] || 'Anonyme')}</td>
@@ -1143,70 +2452,70 @@ async function loadDashboard() {
           </div></td>
         </tr>`).join('');
 
-    // Top tags
-    const tags = topTagsRes.data || [];
-    const maxCount = Math.max(...tags.map(t => t.usage_count || 0), 1);
-    document.getElementById('top-tags-list').innerHTML = tags.length === 0
-      ? `<div style="padding:16px 22px;color:var(--text-muted);font-size:.82rem;">Aucun tag</div>`
-      : tags.map(t => `
+        // Top tags
+        const tags = topTagsRes.data || [];
+        const maxCount = Math.max(...tags.map(t => t.usage_count || 0), 1);
+        document.getElementById('top-tags-list').innerHTML = tags.length === 0
+          ? `<div style="padding:16px 22px;color:var(--text-muted);font-size:.82rem;">Aucun tag</div>`
+          : tags.map(t => `
         <div style="display:flex;align-items:center;gap:12px;padding:9px 22px;border-bottom:1px solid rgba(255,255,255,.04);">
           <div style="flex:1;font-size:.82rem;color:var(--text-sub);">#${escapeHtml(t.name)}</div>
           <div style="width:80px;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;">
-            <div style="width:${Math.round((t.usage_count||0)/maxCount*100)}%;height:100%;background:var(--purple-light);border-radius:3px;"></div>
+            <div style="width:${Math.round((t.usage_count || 0) / maxCount * 100)}%;height:100%;background:var(--purple-light);border-radius:3px;"></div>
           </div>
-          <div style="font-size:.75rem;color:var(--text-muted);min-width:24px;text-align:right;">${t.usage_count||0}</div>
+          <div style="font-size:.75rem;color:var(--text-muted);min-width:24px;text-align:right;">${t.usage_count || 0}</div>
         </div>`).join('');
-  } catch (err) {
-    console.error('Dashboard load error:', err);
-    toast('Erreur lors du chargement', 'error');
-  }
-}
+      } catch (err) {
+        console.error('Dashboard load error:', err);
+        toast('Erreur lors du chargement', 'error');
+      }
+    }
 
-// ═══════════════════════════════════════════════════
-// POSTS
-// ═══════════════════════════════════════════════════
-async function loadPosts() {
-  const filter = document.getElementById('posts-filter').value;
-  let query = adminSupabase.from('posts')
-    .select('id,content,session_token,status,views_count,reactions_count,comments_count,created_at')
-    .order('created_at', { ascending: false })
-    .limit(200);
-  if (filter !== 'all') query = query.eq('status', filter);
+    // ═══════════════════════════════════════════════════
+    // POSTS
+    // ═══════════════════════════════════════════════════
+    async function loadPosts() {
+      const filter = document.getElementById('posts-filter').value;
+      let query = adminSupabase.from('posts')
+        .select('id,content,session_token,status,views_count,reactions_count,comments_count,created_at')
+        .order('created_at', { ascending: false })
+        .limit(200);
+      if (filter !== 'all') query = query.eq('status', filter);
 
-  const { data, error } = await query;
-  if (error) { toast('Erreur chargement posts', 'error'); return; }
+      const { data, error } = await query;
+      if (error) { toast('Erreur chargement posts', 'error'); return; }
 
-  allPosts = data || [];
+      allPosts = data || [];
 
-  // Enrich with names
-  const tokens = [...new Set(allPosts.map(p => p.session_token).filter(Boolean))];
-  let nameMap = {};
-  if (tokens.length) {
-    const { data: sessions } = await adminSupabase
-      .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', tokens);
-    (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
-  }
-  allPosts = allPosts.map(p => ({ ...p, authorName: nameMap[p.session_token] || 'Anonyme' }));
+      // Enrich with names
+      const tokens = [...new Set(allPosts.map(p => p.session_token).filter(Boolean))];
+      let nameMap = {};
+      if (tokens.length) {
+        const { data: sessions } = await adminSupabase
+          .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', tokens);
+        (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
+      }
+      allPosts = allPosts.map(p => ({ ...p, authorName: nameMap[p.session_token] || 'Anonyme' }));
 
-  document.getElementById('posts-count-label').textContent = `${allPosts.length} témoignage(s)`;
-  renderPostsTable(allPosts);
-}
+      document.getElementById('posts-count-label').textContent = `${allPosts.length} témoignage(s)`;
+      renderPostsTable(allPosts);
+    }
 
-function filterPosts() {
-  const q = document.getElementById('posts-search').value.toLowerCase();
-  const filtered = allPosts.filter(p =>
-    p.content.toLowerCase().includes(q) || (p.authorName||'').toLowerCase().includes(q)
-  );
-  renderPostsTable(filtered);
-}
+    function filterPosts() {
+      const q = document.getElementById('posts-search').value.toLowerCase();
+      const filtered = allPosts.filter(p =>
+        p.content.toLowerCase().includes(q) || (p.authorName || '').toLowerCase().includes(q)
+      );
+      renderPostsTable(filtered);
+    }
 
-function renderPostsTable(posts) {
-  const tbody = document.getElementById('posts-table-body');
-  tbody.innerHTML = posts.length === 0
-    ? `<tr><td colspan="9"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg><p>Aucun témoignage trouvé</p></div></td></tr>`
-    : posts.map(p => `
+    function renderPostsTable(posts) {
+      const tbody = document.getElementById('posts-table-body');
+      tbody.innerHTML = posts.length === 0
+        ? `<tr><td colspan="9"><div class="empty-state"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg><p>Aucun témoignage trouvé</p></div></td></tr>`
+        : posts.map(p => `
       <tr>
-        <td><strong style="font-size:.7rem;font-family:monospace;opacity:.5;">${p.id.slice(0,8)}</strong></td>
+        <td><strong style="font-size:.7rem;font-family:monospace;opacity:.5;">${String(p.id).slice(0, 8)}</strong></td>
         <td><div class="cell-text" title="${escapeHtml(p.content)}">${escapeHtml(truncate(p.content, 70))}</div></td>
         <td>${escapeHtml(p.authorName)}</td>
         <td><span class="badge ${p.status}">${p.status}</span></td>
@@ -1228,52 +2537,52 @@ function renderPostsTable(posts) {
           </button>
         </div></td>
       </tr>`).join('');
-}
+    }
 
-// ═══════════════════════════════════════════════════
-// COMMENTS
-// ═══════════════════════════════════════════════════
-async function loadComments() {
-  const filter = document.getElementById('comments-filter').value;
-  let query = adminSupabase.from('comments')
-    .select('id,content,session_token,post_id,status,likes_count,created_at')
-    .order('created_at', { ascending: false }).limit(200);
-  if (filter !== 'all') query = query.eq('status', filter);
+    // ═══════════════════════════════════════════════════
+    // COMMENTS
+    // ═══════════════════════════════════════════════════
+    async function loadComments() {
+      const filter = document.getElementById('comments-filter').value;
+      let query = adminSupabase.from('comments')
+        .select('id,content,session_token,post_id,status,likes_count,created_at')
+        .order('created_at', { ascending: false }).limit(200);
+      if (filter !== 'all') query = query.eq('status', filter);
 
-  const { data, error } = await query;
-  if (error) { toast('Erreur chargement commentaires', 'error'); return; }
+      const { data, error } = await query;
+      if (error) { toast('Erreur chargement commentaires', 'error'); return; }
 
-  allComments = data || [];
-  const tokens = [...new Set(allComments.map(c => c.session_token).filter(Boolean))];
-  let nameMap = {};
-  if (tokens.length) {
-    const { data: sessions } = await adminSupabase
-      .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', tokens);
-    (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
-  }
-  allComments = allComments.map(c => ({ ...c, authorName: nameMap[c.session_token] || 'Anonyme' }));
+      allComments = data || [];
+      const tokens = [...new Set(allComments.map(c => c.session_token).filter(Boolean))];
+      let nameMap = {};
+      if (tokens.length) {
+        const { data: sessions } = await adminSupabase
+          .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', tokens);
+        (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
+      }
+      allComments = allComments.map(c => ({ ...c, authorName: nameMap[c.session_token] || 'Anonyme' }));
 
-  document.getElementById('comments-count-label').textContent = `${allComments.length} commentaire(s)`;
-  renderCommentsTable(allComments);
-}
+      document.getElementById('comments-count-label').textContent = `${allComments.length} commentaire(s)`;
+      renderCommentsTable(allComments);
+    }
 
-function filterComments() {
-  const q = document.getElementById('comments-search').value.toLowerCase();
-  const filtered = allComments.filter(c =>
-    c.content.toLowerCase().includes(q) || (c.authorName||'').toLowerCase().includes(q)
-  );
-  renderCommentsTable(filtered);
-}
+    function filterComments() {
+      const q = document.getElementById('comments-search').value.toLowerCase();
+      const filtered = allComments.filter(c =>
+        c.content.toLowerCase().includes(q) || (c.authorName || '').toLowerCase().includes(q)
+      );
+      renderCommentsTable(filtered);
+    }
 
-function renderCommentsTable(comments) {
-  const tbody = document.getElementById('comments-table-body');
-  tbody.innerHTML = comments.length === 0
-    ? `<tr><td colspan="7"><div class="empty-state"><p>Aucun commentaire trouvé</p></div></td></tr>`
-    : comments.map(c => `
+    function renderCommentsTable(comments) {
+      const tbody = document.getElementById('comments-table-body');
+      tbody.innerHTML = comments.length === 0
+        ? `<tr><td colspan="7"><div class="empty-state"><p>Aucun commentaire trouvé</p></div></td></tr>`
+        : comments.map(c => `
       <tr>
         <td><div class="cell-text" title="${escapeHtml(c.content)}">${escapeHtml(truncate(c.content, 80))}</div></td>
         <td>${escapeHtml(c.authorName)}</td>
-        <td><code style="font-size:.68rem;opacity:.5;">${c.post_id.slice(0,8)}…</code></td>
+        <td><code style="font-size:.68rem;opacity:.5;">${String(c.post_id).slice(0, 8)}…</code></td>
         <td><span class="badge ${c.status}">${c.status}</span></td>
         <td>${c.likes_count || 0}</td>
         <td>${timeAgo(c.created_at)}</td>
@@ -1283,169 +2592,469 @@ function renderCommentsTable(comments) {
           </button>
         </div></td>
       </tr>`).join('');
-}
+    }
 
-// ═══════════════════════════════════════════════════
-// SESSIONS
-// ═══════════════════════════════════════════════════
-async function loadSessions() {
-  const { data, error } = await adminSupabase
-    .from('anonymous_sessions')
-    .select('session_token,anonymous_name,posts_count,comments_count,last_activity_at,is_banned,ban_reason,created_at')
-    .eq('is_banned', false)
-    .order('last_activity_at', { ascending: false })
-    .limit(200);
+    // ═══════════════════════════════════════════════════
+    // SESSIONS
+    // ═══════════════════════════════════════════════════
+    async function loadSessions() {
+      const { data, error } = await adminSupabase
+        .from('anonymous_sessions')
+        .select('session_token,anonymous_name,posts_count,comments_count,last_activity_at,is_banned,ban_reason,created_at')
+        .eq('is_banned', false)
+        .order('last_activity_at', { ascending: false })
+        .limit(200);
 
-  if (error) { toast('Erreur chargement sessions', 'error'); return; }
-  allSessions = data || [];
-  document.getElementById('sessions-count-label').textContent = `${allSessions.length} session(s) actives`;
-  renderSessionsTable(allSessions);
-}
+      if (error) { toast('Erreur chargement sessions', 'error'); return; }
+      allSessions = data || [];
+      document.getElementById('sessions-count-label').textContent = `${allSessions.length} session(s) actives`;
+      renderSessionsTable(allSessions);
+    }
 
-function filterSessions() {
-  const q = document.getElementById('sessions-search').value.toLowerCase();
-  const filtered = allSessions.filter(s => (s.anonymous_name||'').toLowerCase().includes(q));
-  renderSessionsTable(filtered);
-}
+    function filterSessions() {
+      const q = document.getElementById('sessions-search').value.toLowerCase();
+      const filtered = allSessions.filter(s => (s.anonymous_name || '').toLowerCase().includes(q));
+      renderSessionsTable(filtered);
+    }
 
-function renderSessionsTable(sessions) {
-  const tbody = document.getElementById('sessions-table-body');
-  tbody.innerHTML = sessions.length === 0
-    ? `<tr><td colspan="7"><div class="empty-state"><p>Aucune session</p></div></td></tr>`
-    : sessions.map(s => `
+    function renderSessionsTable(sessions) {
+      const tbody = document.getElementById('sessions-table-body');
+      tbody.innerHTML = sessions.length === 0
+        ? `<tr><td colspan="7"><div class="empty-state"><p>Aucune session</p></div></td></tr>`
+        : sessions.map(s => `
       <tr>
         <td><strong>${escapeHtml(s.anonymous_name || '—')}</strong></td>
-        <td><code style="font-size:.72rem;opacity:.5;">${s.session_token.slice(0,12)}…</code></td>
+        <td><code style="font-size:.72rem;opacity:.5;">${String(s.session_token).slice(0, 12)}…</code></td>
         <td>${s.posts_count || 0}</td>
         <td>${s.comments_count || 0}</td>
         <td>${timeAgo(s.last_activity_at)}</td>
         <td><span class="badge active">active</span></td>
         <td><div class="tbl-actions">
-          <button class="tbl-btn danger" onclick="confirmBanSession('${s.session_token}', '${escapeHtml(s.anonymous_name||'?')}')" title="Bannir">
+          <button class="tbl-btn danger" onclick="confirmBanSession('${s.session_token}', '${escapeHtml(s.anonymous_name || '?')}')" title="Bannir">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
           </button>
         </div></td>
       </tr>`).join('');
-}
+    }
 
-// ═══════════════════════════════════════════════════
-// BANNED
-// ═══════════════════════════════════════════════════
-async function loadBanned() {
-  const { data, error, count } = await adminSupabase
-    .from('anonymous_sessions')
-    .select('session_token,anonymous_name,posts_count,ban_reason,last_activity_at', { count: 'exact' })
-    .eq('is_banned', true)
-    .order('last_activity_at', { ascending: false });
+    // ═══════════════════════════════════════════════════
+    // BANNED
+    // ═══════════════════════════════════════════════════
+    async function loadBanned() {
+      const { data, error, count } = await adminSupabase
+        .from('anonymous_sessions')
+        .select('session_token,anonymous_name,posts_count,ban_reason,last_activity_at', { count: 'exact' })
+        .eq('is_banned', true)
+        .order('last_activity_at', { ascending: false });
 
-  if (error) { toast('Erreur chargement bannis', 'error'); return; }
-  const banned = data || [];
-  document.getElementById('banned-count-label').textContent = `${banned.length} utilisateur(s) banni(s)`;
-  document.getElementById('badge-banned').textContent = banned.length;
+      if (error) { toast('Erreur chargement bannis', 'error'); return; }
+      const banned = data || [];
+      document.getElementById('banned-count-label').textContent = `${banned.length} utilisateur(s) banni(s)`;
+      document.getElementById('badge-banned').textContent = banned.length;
 
-  const tbody = document.getElementById('banned-table-body');
-  tbody.innerHTML = banned.length === 0
-    ? `<tr><td colspan="5"><div class="empty-state"><p>Aucun utilisateur banni 🎉</p></div></td></tr>`
-    : banned.map(s => `
+      const tbody = document.getElementById('banned-table-body');
+      tbody.innerHTML = banned.length === 0
+        ? `<tr><td colspan="5"><div class="empty-state"><p></p></div></td></tr>`
+        : banned.map(s => `
       <tr>
         <td><strong>${escapeHtml(s.anonymous_name || '—')}</strong></td>
         <td>${escapeHtml(s.ban_reason || 'Pas de raison renseignée')}</td>
         <td>${s.posts_count || 0}</td>
         <td>${timeAgo(s.last_activity_at)}</td>
         <td><div class="tbl-actions">
-          <button class="tbl-btn success" onclick="confirmUnbanSession('${s.session_token}', '${escapeHtml(s.anonymous_name||'?')}')" title="Débannir">
+          <button class="tbl-btn success" onclick="confirmUnbanSession('${s.session_token}', '${escapeHtml(s.anonymous_name || '?')}')" title="Débannir">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
           </button>
         </div></td>
       </tr>`).join('');
-}
+    }
 
-// ═══════════════════════════════════════════════════
-// TAGS & MOODS
-// ═══════════════════════════════════════════════════
-async function loadTagsAndMoods() {
-  const [tagsRes, moodsRes] = await Promise.all([
-    adminSupabase.from('tags').select('id,name,usage_count').order('usage_count', { ascending: false }),
-    adminSupabase.from('moods').select('id,name,emoji,is_active').order('sort_order'),
-  ]);
+    // ═══════════════════════════════════════════════════
+    // DISCUSSIONS - WhatsApp Style
+    // ═══════════════════════════════════════════════════
+    async function loadDiscussions() {
+      const { data, error } = await adminSupabase
+        .from('groups')
+        .select('id,name,description,created_by_admin,status,members_count,messages_count,created_at,updated_at')
+        .order('updated_at', { ascending: false })
+        .limit(200);
 
-  const tags = tagsRes.data || [];
-  const moods = moodsRes.data || [];
+      if (error) { toast('Erreur chargement groupes', 'error'); return; }
 
-  document.getElementById('tags-count').textContent = `${tags.length} tags`;
-  document.getElementById('moods-count').textContent = `${moods.length} humeurs`;
+      allGroups = data || [];
 
-  document.getElementById('tags-container').innerHTML = tags.length === 0
-    ? `<div style="color:var(--text-muted);font-size:.82rem;">Aucun tag</div>`
-    : tags.map(t => `
+      // Update stats
+      document.getElementById('chat-stat-groups').textContent = allGroups.length;
+      document.getElementById('chat-stat-members').textContent = allGroups.reduce((s, g) => s + (g.members_count || 0), 0);
+      document.getElementById('chat-stat-messages').textContent = allGroups.reduce((s, g) => s + (g.messages_count || 0), 0);
+      document.getElementById('badge-discussions').textContent = allGroups.length;
+
+      renderChatGroupsList(allGroups);
+    }
+
+    function filterGroups() {
+      const q = document.getElementById('groups-search').value.toLowerCase();
+      const filtered = allGroups.filter(g =>
+        g.name.toLowerCase().includes(q) || (g.description || '').toLowerCase().includes(q)
+      );
+      renderChatGroupsList(filtered);
+    }
+
+    function renderChatGroupsList(groups) {
+      const container = document.getElementById('chatGroupsList');
+      if (groups.length === 0) {
+        container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-muted);">Aucun groupe</div>';
+        return;
+      }
+
+      container.innerHTML = groups.map(g => `
+        <div class="chat-group-item ${currentGroupId === g.id ? 'active' : ''}" onclick="selectChatGroup('${g.id}')">
+          <div class="chat-group-avatar">${escapeHtml(g.name.charAt(0).toUpperCase())}</div>
+          <div class="chat-group-preview">
+            <div class="chat-group-name">${escapeHtml(g.name)}</div>
+            <div class="chat-group-meta">
+              <span>${g.members_count || 0} membres</span>
+              <span class="chat-group-badge ${g.status}">${g.status === 'active' ? 'Actif' : 'Fermé'}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function selectChatGroup(groupId) {
+      const group = allGroups.find(g => g.id === groupId);
+      if (!group) return;
+
+      currentGroupId = groupId;
+
+      // Update UI
+      document.getElementById('chatEmpty').style.display = 'none';
+      document.getElementById('chatContent').style.display = 'flex';
+      document.getElementById('chatSidebar').classList.add('hidden');
+
+      // Update header
+      document.getElementById('chatHeaderTitle').textContent = group.name;
+      document.getElementById('chatHeaderMembers').textContent = `${group.members_count || 0} membres`;
+
+      const statusBadge = document.getElementById('chatHeaderStatus');
+      statusBadge.className = `chat-group-badge ${group.status}`;
+      statusBadge.textContent = group.status === 'active' ? 'Actif' : 'Fermé';
+      document.getElementById('chatToggleText').textContent = group.status === 'active' ? 'Fermer' : 'Réouvrir';
+
+      // Re-render list to show active state
+      renderChatGroupsList(allGroups);
+
+      await loadChatMessages(groupId);
+    }
+
+    function closeChatPanel() {
+      document.getElementById('chatSidebar').classList.remove('hidden');
+      document.getElementById('chatContent').style.display = 'none';
+      document.getElementById('chatEmpty').style.display = 'flex';
+      currentGroupId = null;
+      renderChatGroupsList(allGroups);
+    }
+
+    async function loadChatMessages(groupId) {
+      const { data, error } = await adminSupabase.from('group_messages')
+        .select('id,content,session_token,is_admin_reply,admin_email,status,created_at')
+        .eq('group_id', groupId)
+        .eq('status', 'visible')
+        .order('created_at', { ascending: true });
+
+      if (error) { toast('Erreur chargement messages', 'error'); return; }
+      const messages = data || [];
+
+      // Get author names
+      const tokens = [...new Set(messages.filter(m => !m.is_admin_reply).map(m => m.session_token).filter(Boolean))];
+      let nameMap = {};
+      if (tokens.length) {
+        const { data: sessions } = await adminSupabase
+          .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', tokens);
+        (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
+      }
+
+      const container = document.getElementById('chatMessages');
+      container.innerHTML = '';
+
+      if (messages.length === 0) {
+        container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--text-muted);">Aucun message</div>';
+        return;
+      }
+
+      let lastDate = '';
+      messages.forEach(m => {
+        const msgDate = new Date(m.created_at).toDateString();
+        if (msgDate !== lastDate) {
+          lastDate = msgDate;
+          container.innerHTML += `<div class="chat-date-sep"><span>${formatChatDate(m.created_at)}</span></div>`;
+        }
+
+        const isAdmin = m.is_admin_reply;
+        const authorName = isAdmin ? 'Admin' : (nameMap[m.session_token] || 'Anonyme');
+
+        container.innerHTML += `
+          <div class="chat-msg-wrapper ${isAdmin ? 'own' : 'other'}">
+            ${!isAdmin ? `<div class="chat-msg-sender">${escapeHtml(authorName)}</div>` : ''}
+            <div class="chat-msg-bubble">
+              <div class="chat-msg-text">${escapeHtml(m.content)}</div>
+              <div class="chat-msg-meta">
+                ${isAdmin ? `<span class="chat-msg-admin-badge">ADMIN</span>` : ''}
+                <span>${formatChatTime(m.created_at)}</span>
+              </div>
+              <div class="chat-msg-actions">
+                <button class="chat-msg-action-btn danger" onclick="deleteChatMessage('${m.id}')" title="Supprimer">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px;">
+                    <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      // Scroll to bottom
+      container.scrollTop = container.scrollHeight;
+    }
+
+    async function sendChatMessage() {
+      if (!currentGroupId) return;
+      const input = document.getElementById('chatInput');
+      const content = input.value.trim();
+      if (!content) return;
+
+      const adminEmail = document.getElementById('adminEmail').textContent;
+      const { error } = await adminSupabase.from('group_messages').insert({
+        group_id: currentGroupId,
+        content,
+        session_token: 'admin',
+        is_admin_reply: true,
+        admin_email: adminEmail,
+        status: 'visible'
+      });
+
+      if (error) { toast('Erreur envoi message', 'error'); return; }
+
+      // Update group updated_at
+      await adminSupabase.from('groups')
+        .update({ updated_at: new Date().toISOString() })
+        .eq('id', currentGroupId);
+
+      input.value = '';
+      input.style.height = 'auto';
+      await loadChatMessages(currentGroupId);
+      loadDiscussions();
+    }
+
+    function handleChatKeydown(e) {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendChatMessage();
+      }
+    }
+
+    function autoResizeChatInput(el) {
+      el.style.height = 'auto';
+      el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+    }
+
+    async function deleteChatMessage(messageId) {
+      confirm2('Supprimer ce message ?', async () => {
+        const { error } = await adminSupabase.from('group_messages')
+          .update({ status: 'deleted' })
+          .eq('id', messageId);
+        if (error) { toast('Erreur', 'error'); return; }
+        toast('Message supprimé', 'success');
+        await loadChatMessages(currentGroupId);
+      });
+    }
+
+    async function toggleGroupStatus() {
+      if (!currentGroupId) return;
+      const group = allGroups.find(g => g.id === currentGroupId);
+      if (!group) return;
+
+      const newStatus = group.status === 'active' ? 'closed' : 'active';
+      const { error } = await adminSupabase.from('groups').update({ status: newStatus }).eq('id', currentGroupId);
+
+      if (error) { toast('Erreur', 'error'); return; }
+
+      group.status = newStatus;
+      document.getElementById('chatHeaderStatus').className = `chat-group-badge ${newStatus}`;
+      document.getElementById('chatHeaderStatus').textContent = newStatus === 'active' ? 'Actif' : 'Fermé';
+      document.getElementById('chatToggleText').textContent = newStatus === 'active' ? 'Fermer' : 'Réouvrir';
+
+      toast(newStatus === 'active' ? 'Groupe réouvert' : 'Groupe fermé', 'success');
+      renderChatGroupsList(allGroups);
+    }
+
+    function confirmDeleteCurrentGroup() {
+      if (!currentGroupId) return;
+      const group = allGroups.find(g => g.id === currentGroupId);
+      confirm2(`Supprimer le groupe <strong>${group ? group.name : ''}</strong> et tous ses messages ?`, async () => {
+        const { error } = await adminSupabase.from('groups').delete().eq('id', currentGroupId);
+        if (error) { toast('Erreur suppression', 'error'); return; }
+        toast('Groupe supprimé', 'success');
+        closeChatPanel();
+        loadDiscussions();
+      }, 'Supprimer');
+    }
+
+    function formatChatDate(dateStr) {
+      const date = new Date(dateStr);
+      const today = new Date();
+      if (date.toDateString() === today.toDateString()) return "Aujourd'hui";
+      const yesterday = new Date(today);
+      yesterday.setDate(yesterday.getDate() - 1);
+      if (date.toDateString() === yesterday.toDateString()) return 'Hier';
+      return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' });
+    }
+
+    function formatChatTime(dateStr) {
+      return new Date(dateStr).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    // Create Group Modal
+    function openCreateGroupModal() {
+      if (currentAdminRole !== 'super_admin') {
+        toast('Seul un super admin peut créer des groupes', 'error');
+        return;
+      }
+      document.getElementById('createGroupModal').classList.add('open');
+    }
+
+    function closeCreateGroupModal() {
+      document.getElementById('createGroupModal').classList.remove('open');
+      document.getElementById('new-group-name').value = '';
+      document.getElementById('new-group-description').value = '';
+    }
+
+    async function createGroup() {
+      const name = document.getElementById('new-group-name').value.trim();
+      const description = document.getElementById('new-group-description').value.trim();
+
+      if (!name) {
+        toast('Le nom du groupe est requis', 'error');
+        return;
+      }
+
+      if (!currentAdminId) {
+        toast('Erreur: ID admin non trouvé', 'error');
+        return;
+      }
+
+      const { error } = await adminSupabase.from('groups').insert({
+        name,
+        description: description || null,
+        created_by_admin: currentAdminId,
+        status: 'active',
+        members_count: 0,
+        messages_count: 0
+      });
+
+      if (error) {
+        toast('Erreur lors de la création du groupe', 'error');
+        console.error(error);
+        return;
+      }
+
+      closeCreateGroupModal();
+      toast(`Groupe "${name}" créé`, 'success');
+      loadDiscussions();
+    }
+
+    // Close modal on overlay click
+    document.getElementById('createGroupModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeCreateGroupModal();
+    });
+
+    // ═══════════════════════════════════════════════════
+    // TAGS & MOODS
+    // ═══════════════════════════════════════════════════
+    async function loadTagsAndMoods() {
+      const [tagsRes, moodsRes] = await Promise.all([
+        adminSupabase.from('tags').select('id,name,usage_count').order('usage_count', { ascending: false }),
+        adminSupabase.from('moods').select('id,name,emoji,is_active').order('sort_order'),
+      ]);
+
+      const tags = tagsRes.data || [];
+      const moods = moodsRes.data || [];
+
+      document.getElementById('tags-count').textContent = `${tags.length} tags`;
+      document.getElementById('moods-count').textContent = `${moods.length} humeurs`;
+
+      document.getElementById('tags-container').innerHTML = tags.length === 0
+        ? `<div style="color:var(--text-muted);font-size:.82rem;">Aucun tag</div>`
+        : tags.map(t => `
       <div class="tag-chip">
         #${escapeHtml(t.name)}
         <span class="tag-count">${t.usage_count || 0}</span>
         <span class="tag-del" onclick="deleteTag('${t.id}', '${escapeHtml(t.name)}')">✕</span>
       </div>`).join('');
 
-  document.getElementById('moods-container').innerHTML = moods.length === 0
-    ? `<div style="color:var(--text-muted);font-size:.82rem;">Aucune humeur</div>`
-    : moods.map(m => `
+      document.getElementById('moods-container').innerHTML = moods.length === 0
+        ? `<div style="color:var(--text-muted);font-size:.82rem;">Aucune humeur</div>`
+        : moods.map(m => `
       <div class="tag-chip" style="${!m.is_active ? 'opacity:.4;' : ''}">
         ${m.emoji} ${escapeHtml(m.name)}
         <span class="tag-del" onclick="toggleMood('${m.id}', ${m.is_active})">${m.is_active ? '✕' : '↩'}</span>
       </div>`).join('');
-}
+    }
 
-async function addTag() {
-  const input = document.getElementById('new-tag-input');
-  const name = input.value.trim().replace(/^#/, '');
-  if (!name) return;
-  const slug = name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '-');
-  const { error } = await adminSupabase.from('tags').insert({ name, slug });
-  if (error) { toast('Erreur: tag existant peut-être?', 'error'); return; }
-  input.value = '';
-  toast(`Tag #${name} ajouté`, 'success');
-  loadTagsAndMoods();
-}
+    async function addTag() {
+      const input = document.getElementById('new-tag-input');
+      const name = input.value.trim().replace(/^#/, '');
+      if (!name) return;
+      const slug = name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '-');
+      const { error } = await adminSupabase.from('tags').insert({ name, slug });
+      if (error) { toast('Erreur: tag existant peut-être?', 'error'); return; }
+      input.value = '';
+      toast(`Tag #${name} ajouté`, 'success');
+      loadTagsAndMoods();
+    }
 
-async function deleteTag(id, name) {
-  confirm2(`Supprimer le tag <strong>#${name}</strong> ?`, async () => {
-    const { error } = await adminSupabase.from('tags').delete().eq('id', id);
-    if (error) { toast('Erreur suppression tag', 'error'); return; }
-    toast(`Tag supprimé`, 'success');
-    loadTagsAndMoods();
-  });
-}
+    async function deleteTag(id, name) {
+      confirm2(`Supprimer le tag <strong>#${name}</strong> ?`, async () => {
+        const { error } = await adminSupabase.from('tags').delete().eq('id', id);
+        if (error) { toast('Erreur suppression tag', 'error'); return; }
+        toast(`Tag supprimé`, 'success');
+        loadTagsAndMoods();
+      });
+    }
 
-async function addMood() {
-  const emoji = document.getElementById('new-mood-emoji').value.trim();
-  const name = document.getElementById('new-mood-name').value.trim();
-  if (!name || !emoji) { toast('Emoji et nom requis', 'error'); return; }
-  const { error } = await adminSupabase.from('moods').insert({ name, emoji, sort_order: 99 });
-  if (error) { toast('Erreur ajout humeur', 'error'); return; }
-  document.getElementById('new-mood-emoji').value = '';
-  document.getElementById('new-mood-name').value = '';
-  toast(`Humeur "${name}" ajoutée`, 'success');
-  loadTagsAndMoods();
-}
+    async function addMood() {
+      const emoji = document.getElementById('new-mood-emoji').value.trim();
+      const name = document.getElementById('new-mood-name').value.trim();
+      if (!name || !emoji) { toast('Emoji et nom requis', 'error'); return; }
+      const { error } = await adminSupabase.from('moods').insert({ name, emoji, sort_order: 99 });
+      if (error) { toast('Erreur ajout humeur', 'error'); return; }
+      document.getElementById('new-mood-emoji').value = '';
+      document.getElementById('new-mood-name').value = '';
+      toast(`Humeur "${name}" ajoutée`, 'success');
+      loadTagsAndMoods();
+    }
 
-async function toggleMood(id, isActive) {
-  const { error } = await adminSupabase.from('moods').update({ is_active: !isActive }).eq('id', id);
-  if (error) { toast('Erreur mise à jour', 'error'); return; }
-  toast(isActive ? 'Humeur désactivée' : 'Humeur réactivée', 'success');
-  loadTagsAndMoods();
-}
+    async function toggleMood(id, isActive) {
+      const { error } = await adminSupabase.from('moods').update({ is_active: !isActive }).eq('id', id);
+      if (error) { toast('Erreur mise à jour', 'error'); return; }
+      toast(isActive ? 'Humeur désactivée' : 'Humeur réactivée', 'success');
+      loadTagsAndMoods();
+    }
 
-// ═══════════════════════════════════════════════════
-// ADMINS
-// ═══════════════════════════════════════════════════
-async function loadAdmins() {
-  const { data, error } = await adminSupabase
-    .from('admin_users').select('id,email,role,is_active,created_at').order('created_at');
-  if (error) { toast('Erreur chargement admins', 'error'); return; }
-  const admins = data || [];
+    // ═══════════════════════════════════════════════════
+    // ADMINS
+    // ═══════════════════════════════════════════════════
+    async function loadAdmins() {
+      const { data, error } = await adminSupabase
+        .from('admin_users').select('id,email,role,is_active,created_at').order('created_at');
+      if (error) { toast('Erreur chargement admins', 'error'); return; }
+      const admins = data || [];
 
-  const tbody = document.getElementById('admins-table-body');
-  tbody.innerHTML = admins.length === 0
-    ? `<tr><td colspan="5"><div class="empty-state"><p>Aucun admin</p></div></td></tr>`
-    : admins.map(a => `
+      const tbody = document.getElementById('admins-table-body');
+      tbody.innerHTML = admins.length === 0
+        ? `<tr><td colspan="5"><div class="empty-state"><p>Aucun admin</p></div></td></tr>`
+        : admins.map(a => `
       <tr>
         <td><strong>${escapeHtml(a.email)}</strong></td>
         <td><span class="badge active">${escapeHtml(a.role || 'admin')}</span></td>
@@ -1454,149 +3063,150 @@ async function loadAdmins() {
         <td><div class="tbl-actions">
           <button class="tbl-btn ${a.is_active ? 'danger' : 'success'}" onclick="toggleAdmin('${a.id}', ${a.is_active}, '${escapeHtml(a.email)}')" title="${a.is_active ? 'Désactiver' : 'Réactiver'}">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${a.is_active
-              ? '<circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>'
-              : '<polyline points="20 6 9 17 4 12"/>'}</svg>
+            ? '<circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>'
+            : '<polyline points="20 6 9 17 4 12"/>'}</svg>
           </button>
         </div></td>
       </tr>`).join('');
-}
+    }
 
-function openAddAdminModal() { document.getElementById('addAdminModal').classList.add('open'); }
-function closeAddAdminModal() { document.getElementById('addAdminModal').classList.remove('open'); }
+    function openAddAdminModal() { document.getElementById('addAdminModal').classList.add('open'); }
+    function closeAddAdminModal() { document.getElementById('addAdminModal').classList.remove('open'); }
 
-async function addAdmin() {
-  const email = document.getElementById('new-admin-email').value.trim();
-  if (!email) { toast('Email requis', 'error'); return; }
-  const { error } = await adminSupabase.from('admin_users').insert({ email, role: 'admin', is_active: true });
-  if (error) { toast('Erreur: admin existant peut-être?', 'error'); return; }
-  closeAddAdminModal();
-  toast(`Admin ${email} ajouté`, 'success');
-  loadAdmins();
-}
+    async function addAdmin() {
+      const email = document.getElementById('new-admin-email').value.trim();
+      if (!email) { toast('Email requis', 'error'); return; }
+      const { error } = await adminSupabase.from('admin_users').insert({ email, role: 'admin', is_active: true });
+      if (error) { toast('Erreur: admin existant peut-être?', 'error'); return; }
+      closeAddAdminModal();
+      toast(`Admin ${email} ajouté`, 'success');
+      loadAdmins();
+    }
 
-async function toggleAdmin(id, isActive, email) {
-  confirm2(`${isActive ? 'Désactiver' : 'Réactiver'} l'accès de <strong>${email}</strong> ?`, async () => {
-    const { error } = await adminSupabase.from('admin_users').update({ is_active: !isActive }).eq('id', id);
-    if (error) { toast('Erreur mise à jour', 'error'); return; }
-    toast(`Accès ${isActive ? 'désactivé' : 'réactivé'}`, 'success');
-    loadAdmins();
-  });
-}
+    async function toggleAdmin(id, isActive, email) {
+      confirm2(`${isActive ? 'Désactiver' : 'Réactiver'} l'accès de <strong>${email}</strong> ?`, async () => {
+        const { error } = await adminSupabase.from('admin_users').update({ is_active: !isActive }).eq('id', id);
+        if (error) { toast('Erreur mise à jour', 'error'); return; }
+        toast(`Accès ${isActive ? 'désactivé' : 'réactivé'}`, 'success');
+        loadAdmins();
+      });
+    }
 
-// ═══════════════════════════════════════════════════
-// ACTIONS — POSTS
-// ═══════════════════════════════════════════════════
-function confirmDeletePost(id) {
-  confirm2('Supprimer ce témoignage ? Cette action le marquera comme <strong>deleted</strong>.', async () => {
-    const { error } = await adminSupabase.from('posts').update({ status: 'deleted' }).eq('id', id);
-    if (error) { toast('Erreur suppression', 'error'); return; }
-    toast('Témoignage supprimé', 'success');
-    if (currentSection === 'dashboard') loadDashboard(); else loadPosts();
-  });
-}
+    // ═══════════════════════════════════════════════════
+    // ACTIONS — POSTS
+    // ═══════════════════════════════════════════════════
+    function confirmDeletePost(id) {
+      confirm2('Supprimer ce témoignage ? Cette action le marquera comme <strong>deleted</strong>.', async () => {
+        const { error } = await adminSupabase.from('posts').update({ status: 'deleted' }).eq('id', id);
+        if (error) { toast('Erreur suppression', 'error'); return; }
+        toast('Témoignage supprimé', 'success');
+        if (currentSection === 'dashboard') loadDashboard(); else loadPosts();
+      });
+    }
 
-function confirmHidePost(id) {
-  confirm2('Masquer ce témoignage ? Il ne sera plus visible publiquement.', async () => {
-    const { error } = await adminSupabase.from('posts').update({ status: 'hidden' }).eq('id', id);
-    if (error) { toast('Erreur', 'error'); return; }
-    toast('Témoignage masqué', 'success');
-    loadPosts();
-  });
-}
+    function confirmHidePost(id) {
+      confirm2('Masquer ce témoignage ? Il ne sera plus visible publiquement.', async () => {
+        const { error } = await adminSupabase.from('posts').update({ status: 'hidden' }).eq('id', id);
+        if (error) { toast('Erreur', 'error'); return; }
+        toast('Témoignage masqué', 'success');
+        loadPosts();
+      });
+    }
 
-async function restorePost(id) {
-  const { error } = await adminSupabase.from('posts').update({ status: 'published' }).eq('id', id);
-  if (error) { toast('Erreur restauration', 'error'); return; }
-  toast('Témoignage restauré', 'success');
-  loadPosts();
-}
+    async function restorePost(id) {
+      const { error } = await adminSupabase.from('posts').update({ status: 'published' }).eq('id', id);
+      if (error) { toast('Erreur restauration', 'error'); return; }
+      toast('Témoignage restauré', 'success');
+      loadPosts();
+    }
 
-// ═══════════════════════════════════════════════════
-// ACTIONS — COMMENTS
-// ═══════════════════════════════════════════════════
-function confirmDeleteComment(id) {
-  confirm2('Supprimer ce commentaire ?', async () => {
-    const { error } = await adminSupabase.from('comments').update({ status: 'deleted' }).eq('id', id);
-    if (error) { toast('Erreur suppression', 'error'); return; }
-    toast('Commentaire supprimé', 'success');
-    loadComments();
-  });
-}
+    // ═══════════════════════════════════════════════════
+    // ACTIONS — COMMENTS
+    // ═══════════════════════════════════════════════════
+    function confirmDeleteComment(id) {
+      confirm2('Supprimer ce commentaire ?', async () => {
+        const { error } = await adminSupabase.from('comments').update({ status: 'deleted' }).eq('id', id);
+        if (error) { toast('Erreur suppression', 'error'); return; }
+        toast('Commentaire supprimé', 'success');
+        loadComments();
+      });
+    }
 
-// ═══════════════════════════════════════════════════
-// ACTIONS — SESSIONS
-// ═══════════════════════════════════════════════════
-function confirmBanSession(token, name) {
-  confirm2(`Bannir l'utilisateur <strong>${name}</strong> ? Il ne pourra plus interagir sur la plateforme.`, async () => {
-    const { error } = await adminSupabase.from('anonymous_sessions')
-      .update({ is_banned: true, ban_reason: 'Banni par un administrateur' })
-      .eq('session_token', token);
-    if (error) { toast('Erreur bannissement', 'error'); return; }
-    toast(`${name} banni`, 'success');
-    loadSessions();
-    loadBanned();
-  }, 'Bannir');
-}
+    // ═══════════════════════════════════════════════════
+    // ACTIONS — SESSIONS
+    // ═══════════════════════════════════════════════════
+    function confirmBanSession(token, name) {
+      confirm2(`Bannir l'utilisateur <strong>${name}</strong> ? Il ne pourra plus interagir sur la plateforme.`, async () => {
+        const { error } = await adminSupabase.from('anonymous_sessions')
+          .update({ is_banned: true, ban_reason: 'Banni par un administrateur' })
+          .eq('session_token', token);
+        if (error) { toast('Erreur bannissement', 'error'); return; }
+        toast(`${name} banni`, 'success');
+        loadSessions();
+        loadBanned();
+      }, 'Bannir');
+    }
 
-function confirmUnbanSession(token, name) {
-  confirm2(`Débannir <strong>${name}</strong> ?`, async () => {
-    const { error } = await adminSupabase.from('anonymous_sessions')
-      .update({ is_banned: false, ban_reason: null })
-      .eq('session_token', token);
-    if (error) { toast('Erreur débannissement', 'error'); return; }
-    toast(`${name} débanni`, 'success');
-    loadBanned();
-  }, 'Débannir');
-}
+    function confirmUnbanSession(token, name) {
+      confirm2(`Débannir <strong>${name}</strong> ?`, async () => {
+        const { error } = await adminSupabase.from('anonymous_sessions')
+          .update({ is_banned: false, ban_reason: null })
+          .eq('session_token', token);
+        if (error) { toast('Erreur débannissement', 'error'); return; }
+        toast(`${name} débanni`, 'success');
+        loadBanned();
+      }, 'Débannir');
+    }
 
-// ═══════════════════════════════════════════════════
-// UI HELPERS
-// ═══════════════════════════════════════════════════
-let modalCallback = null;
+    // ═══════════════════════════════════════════════════
+    // UI HELPERS
+    // ═══════════════════════════════════════════════════
+    let modalCallback = null;
 
-function confirm2(bodyHtml, onConfirm, btnLabel = 'Supprimer') {
-  document.getElementById('modalBody').innerHTML = bodyHtml;
-  document.getElementById('modalConfirmBtn').textContent = btnLabel;
-  document.getElementById('confirmModal').classList.add('open');
-  modalCallback = onConfirm;
-}
+    function confirm2(bodyHtml, onConfirm, btnLabel = 'Supprimer') {
+      document.getElementById('modalBody').innerHTML = bodyHtml;
+      document.getElementById('modalConfirmBtn').textContent = btnLabel;
+      document.getElementById('confirmModal').classList.add('open');
+      modalCallback = onConfirm;
+    }
 
-function closeModal() {
-  document.getElementById('confirmModal').classList.remove('open');
-  modalCallback = null;
-}
+    function closeModal() {
+      document.getElementById('confirmModal').classList.remove('open');
+      modalCallback = null;
+    }
 
-document.getElementById('modalConfirmBtn').addEventListener('click', () => {
-  if (modalCallback) { modalCallback(); }
-  closeModal();
-});
+    document.getElementById('modalConfirmBtn').addEventListener('click', () => {
+      if (modalCallback) { modalCallback(); }
+      closeModal();
+    });
 
-// Close modals on overlay click
-document.getElementById('confirmModal').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeModal();
-});
-document.getElementById('addAdminModal').addEventListener('click', e => {
-  if (e.target === e.currentTarget) closeAddAdminModal();
-});
+    // Close modals on overlay click
+    document.getElementById('confirmModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+    document.getElementById('addAdminModal').addEventListener('click', e => {
+      if (e.target === e.currentTarget) closeAddAdminModal();
+    });
 
-function toast(msg, type = 'info') {
-  const container = document.getElementById('toast-container');
-  const el = document.createElement('div');
-  el.className = `toast ${type}`;
-  const icons = {
-    success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>',
-    error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
-    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
-  };
-  el.innerHTML = (icons[type] || icons.info) + `<span>${msg}</span>`;
-  container.appendChild(el);
-  setTimeout(() => { el.style.animation = 'toastIn .25s ease reverse'; setTimeout(() => el.remove(), 250); }, 3000);
-}
+    function toast(msg, type = 'info') {
+      const container = document.getElementById('toast-container');
+      const el = document.createElement('div');
+      el.className = `toast ${type}`;
+      const icons = {
+        success: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>',
+        error: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+        info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+      };
+      el.innerHTML = (icons[type] || icons.info) + `<span>${msg}</span>`;
+      container.appendChild(el);
+      setTimeout(() => { el.style.animation = 'toastIn .25s ease reverse'; setTimeout(() => el.remove(), 250); }, 3000);
+    }
 
-function escapeHtml(str) {
-  if (!str) return '';
-  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-</script>
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+  </script>
 </body>
+
 </html>
