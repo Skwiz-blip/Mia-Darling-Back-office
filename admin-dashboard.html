@@ -2010,7 +2010,7 @@
               <div class="panel-meta" id="sessions-count-label">Chargement…</div>
             </div>
             <div class="panel-actions">
-              <input class="search-input" id="sessions-search" placeholder="Nom anonyme…" oninput="filterSessions()" />
+              <input class="search-input" id="sessions-search" placeholder="Pseudo, vrai nom, email…" oninput="filterSessions()" />
             </div>
           </div>
           <div class="table-wrap">
@@ -2018,6 +2018,8 @@
               <thead>
                 <tr>
                   <th>Nom anonyme</th>
+                  <th>Vrai nom</th>
+                  <th>Email</th>
                   <th>Token </th>
                   <th>Posts</th>
                   <th>Commentaires</th>
@@ -2028,7 +2030,7 @@
               </thead>
               <tbody id="sessions-table-body">
                 <tr>
-                  <td colspan="7">
+                  <td colspan="9">
                     <div class="empty-state">
                       <p>Chargement…</p>
                     </div>
@@ -2332,6 +2334,58 @@
     let currentAdminId = null;
     let currentAdminRole = null;
 
+    // ═══════════════════════════════════════════════════
+    // VRAIES IDENTITÉS (Google) — visibles ADMIN uniquement
+    // Lues depuis user_identities (table protégée par RLS).
+    // ═══════════════════════════════════════════════════
+    const identityCache = {}; // session_token -> { name, email } | null
+
+    async function fetchIdentities(tokens) {
+      const missing = [...new Set((tokens || []).filter(Boolean))]
+        .filter(t => !(t in identityCache));
+      if (!missing.length) return;
+      const { data, error } = await adminSupabase
+        .from('user_identities')
+        .select('session_token, real_name, real_email')
+        .in('session_token', missing);
+      if (!error) {
+        (data || []).forEach(i => {
+          identityCache[i.session_token] = { name: i.real_name, email: i.real_email };
+        });
+      }
+      // Marque les tokens sans identité pour éviter de les redemander
+      missing.forEach(t => { if (!(t in identityCache)) identityCache[t] = null; });
+    }
+
+    function realName(token) {
+      const id = identityCache[token];
+      return id && id.name ? id.name : '';
+    }
+    function realEmail(token) {
+      const id = identityCache[token];
+      return id && id.email ? id.email : '';
+    }
+
+    // Version compacte "· Vrai nom (email)" pour une ligne (chat)
+    function realIdInline(token) {
+      const n = realName(token), e = realEmail(token);
+      if (!n && !e) return '';
+      const txt = [n, e ? `(${e})` : ''].filter(Boolean).join(' ');
+      return ` · <span style="color:var(--info);font-weight:500;">${escapeHtml(txt)}</span>`;
+    }
+
+    // Petit bloc "vrai nom · email" à afficher sous le pseudo anonyme
+    function realIdHtml(token) {
+      const id = identityCache[token];
+      if (!id || (!id.name && !id.email)) {
+        return '<div style="font-size:.7rem;color:var(--text-muted);margin-top:2px;opacity:.7;">— non identifié</div>';
+      }
+      const parts = [];
+      if (id.name) parts.push(`<strong style="color:var(--purple-soft);font-weight:600;">${escapeHtml(id.name)}</strong>`);
+      if (id.email) parts.push(`<span style="color:var(--info);">${escapeHtml(id.email)}</span>`);
+      return `<div style="font-size:.7rem;margin-top:3px;line-height:1.3;">${parts.join('<br>')}</div>`;
+    }
+
     window.addEventListener('load', async () => {
       if (window.lucide) lucide.createIcons();
       const auth = await requireAdminAuth();
@@ -2434,6 +2488,7 @@
             .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', sessionTokens);
           (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
         }
+        await fetchIdentities(sessionTokens);
 
         const tbody = document.getElementById('recent-posts-table');
         tbody.innerHTML = recentPosts.length === 0
@@ -2441,7 +2496,7 @@
           : recentPosts.map(p => `
         <tr>
           <td><div class="cell-text"><strong>${escapeHtml(truncate(p.content, 60))}</strong></div></td>
-          <td>${escapeHtml(nameMap[p.session_token] || 'Anonyme')}</td>
+          <td>${escapeHtml(nameMap[p.session_token] || 'Anonyme')}${realIdHtml(p.session_token)}</td>
           <td>${p.views_count || 0}</td>
           <td>${p.reactions_count || 0}</td>
           <td>${timeAgo(p.created_at)}</td>
@@ -2495,6 +2550,7 @@
           .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', tokens);
         (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
       }
+      await fetchIdentities(tokens);
       allPosts = allPosts.map(p => ({ ...p, authorName: nameMap[p.session_token] || 'Anonyme' }));
 
       document.getElementById('posts-count-label').textContent = `${allPosts.length} témoignage(s)`;
@@ -2505,6 +2561,8 @@
       const q = document.getElementById('posts-search').value.toLowerCase();
       const filtered = allPosts.filter(p =>
         p.content.toLowerCase().includes(q) || (p.authorName || '').toLowerCase().includes(q)
+        || realName(p.session_token).toLowerCase().includes(q)
+        || realEmail(p.session_token).toLowerCase().includes(q)
       );
       renderPostsTable(filtered);
     }
@@ -2517,7 +2575,7 @@
       <tr>
         <td><strong style="font-size:.7rem;font-family:monospace;opacity:.5;">${String(p.id).slice(0, 8)}</strong></td>
         <td><div class="cell-text" title="${escapeHtml(p.content)}">${escapeHtml(truncate(p.content, 70))}</div></td>
-        <td>${escapeHtml(p.authorName)}</td>
+        <td>${escapeHtml(p.authorName)}${realIdHtml(p.session_token)}</td>
         <td><span class="badge ${p.status}">${p.status}</span></td>
         <td>${p.views_count || 0}</td>
         <td>${p.reactions_count || 0}</td>
@@ -2560,6 +2618,7 @@
           .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', tokens);
         (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
       }
+      await fetchIdentities(tokens);
       allComments = allComments.map(c => ({ ...c, authorName: nameMap[c.session_token] || 'Anonyme' }));
 
       document.getElementById('comments-count-label').textContent = `${allComments.length} commentaire(s)`;
@@ -2570,6 +2629,8 @@
       const q = document.getElementById('comments-search').value.toLowerCase();
       const filtered = allComments.filter(c =>
         c.content.toLowerCase().includes(q) || (c.authorName || '').toLowerCase().includes(q)
+        || realName(c.session_token).toLowerCase().includes(q)
+        || realEmail(c.session_token).toLowerCase().includes(q)
       );
       renderCommentsTable(filtered);
     }
@@ -2581,7 +2642,7 @@
         : comments.map(c => `
       <tr>
         <td><div class="cell-text" title="${escapeHtml(c.content)}">${escapeHtml(truncate(c.content, 80))}</div></td>
-        <td>${escapeHtml(c.authorName)}</td>
+        <td>${escapeHtml(c.authorName)}${realIdHtml(c.session_token)}</td>
         <td><code style="font-size:.68rem;opacity:.5;">${String(c.post_id).slice(0, 8)}…</code></td>
         <td><span class="badge ${c.status}">${c.status}</span></td>
         <td>${c.likes_count || 0}</td>
@@ -2607,23 +2668,30 @@
 
       if (error) { toast('Erreur chargement sessions', 'error'); return; }
       allSessions = data || [];
+      await fetchIdentities(allSessions.map(s => s.session_token));
       document.getElementById('sessions-count-label').textContent = `${allSessions.length} session(s) actives`;
       renderSessionsTable(allSessions);
     }
 
     function filterSessions() {
       const q = document.getElementById('sessions-search').value.toLowerCase();
-      const filtered = allSessions.filter(s => (s.anonymous_name || '').toLowerCase().includes(q));
+      const filtered = allSessions.filter(s =>
+        (s.anonymous_name || '').toLowerCase().includes(q)
+        || realName(s.session_token).toLowerCase().includes(q)
+        || realEmail(s.session_token).toLowerCase().includes(q)
+      );
       renderSessionsTable(filtered);
     }
 
     function renderSessionsTable(sessions) {
       const tbody = document.getElementById('sessions-table-body');
       tbody.innerHTML = sessions.length === 0
-        ? `<tr><td colspan="7"><div class="empty-state"><p>Aucune session</p></div></td></tr>`
+        ? `<tr><td colspan="9"><div class="empty-state"><p>Aucune session</p></div></td></tr>`
         : sessions.map(s => `
       <tr>
         <td><strong>${escapeHtml(s.anonymous_name || '—')}</strong></td>
+        <td>${realName(s.session_token) ? `<strong style="color:var(--purple-soft)">${escapeHtml(realName(s.session_token))}</strong>` : '<span style="color:var(--text-muted)">—</span>'}</td>
+        <td>${realEmail(s.session_token) ? `<span style="color:var(--info)">${escapeHtml(realEmail(s.session_token))}</span>` : '<span style="color:var(--text-muted)">—</span>'}</td>
         <td><code style="font-size:.72rem;opacity:.5;">${String(s.session_token).slice(0, 12)}…</code></td>
         <td>${s.posts_count || 0}</td>
         <td>${s.comments_count || 0}</td>
@@ -2649,6 +2717,7 @@
 
       if (error) { toast('Erreur chargement bannis', 'error'); return; }
       const banned = data || [];
+      await fetchIdentities(banned.map(s => s.session_token));
       document.getElementById('banned-count-label').textContent = `${banned.length} utilisateur(s) banni(s)`;
       document.getElementById('badge-banned').textContent = banned.length;
 
@@ -2657,7 +2726,7 @@
         ? `<tr><td colspan="5"><div class="empty-state"><p></p></div></td></tr>`
         : banned.map(s => `
       <tr>
-        <td><strong>${escapeHtml(s.anonymous_name || '—')}</strong></td>
+        <td><strong>${escapeHtml(s.anonymous_name || '—')}</strong>${realIdHtml(s.session_token)}</td>
         <td>${escapeHtml(s.ban_reason || 'Pas de raison renseignée')}</td>
         <td>${s.posts_count || 0}</td>
         <td>${timeAgo(s.last_activity_at)}</td>
@@ -2773,6 +2842,7 @@
           .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', tokens);
         (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
       }
+      await fetchIdentities(tokens);
 
       const container = document.getElementById('chatMessages');
       container.innerHTML = '';
@@ -2795,7 +2865,7 @@
 
         container.innerHTML += `
           <div class="chat-msg-wrapper ${isAdmin ? 'own' : 'other'}">
-            ${!isAdmin ? `<div class="chat-msg-sender">${escapeHtml(authorName)}</div>` : ''}
+            ${!isAdmin ? `<div class="chat-msg-sender">${escapeHtml(authorName)}${realIdInline(m.session_token)}</div>` : ''}
             <div class="chat-msg-bubble">
               <div class="chat-msg-text">${escapeHtml(m.content)}</div>
               <div class="chat-msg-meta">

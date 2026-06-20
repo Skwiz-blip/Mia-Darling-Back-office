@@ -853,6 +853,9 @@
       const nameMap = {};
       (sessions || []).forEach(s => nameMap[s.session_token] = s.anonymous_name);
 
+      // Vraies identités (admin only, table protégée par RLS)
+      await fetchGroupIdentities(tokens);
+
       let lastDate = '';
       messages.forEach(m => {
         const msgDate = new Date(m.created_at).toDateString();
@@ -872,13 +875,32 @@
       scrollToBottom();
     }
 
+    // Cache des vraies identités Google (admin only)
+    const gIdentity = {};
+    async function fetchGroupIdentities(tokens) {
+      const missing = [...new Set((tokens || []).filter(Boolean))].filter(t => !(t in gIdentity));
+      if (!missing.length) return;
+      const { data, error } = await supabase
+        .from('user_identities')
+        .select('session_token, real_name, real_email')
+        .in('session_token', missing);
+      if (!error) (data || []).forEach(i => { gIdentity[i.session_token] = { name: i.real_name, email: i.real_email }; });
+      missing.forEach(t => { if (!(t in gIdentity)) gIdentity[t] = null; });
+    }
+    function gRealIdInline(token) {
+      const id = gIdentity[token];
+      if (!id || (!id.name && !id.email)) return '';
+      const txt = [id.name, id.email ? `(${id.email})` : ''].filter(Boolean).join(' ');
+      return ` · <span style="color:#6BB5FF;font-weight:500;">${escapeHtml(txt)}</span>`;
+    }
+
     function appendMessageToContainer(m, nameMap, container) {
       const isOwn = m.is_admin_reply;
       const wrapper = document.createElement('div');
       wrapper.className = `message-wrapper ${isOwn ? 'Own' : 'Other'}`;
       wrapper.innerHTML = `
         <div class="message-sender">
-          ${isOwn ? '<span style="color:var(--purple-secondary)">Admin</span>' : escapeHtml(nameMap[m.session_token] || 'Anonyme')}
+          ${isOwn ? '<span style="color:var(--purple-secondary)">Admin</span>' : (escapeHtml(nameMap[m.session_token] || 'Anonyme') + gRealIdInline(m.session_token))}
         </div>
         <div class="message-bubble">
           <div class="message-text">${escapeHtml(m.content)}</div>
