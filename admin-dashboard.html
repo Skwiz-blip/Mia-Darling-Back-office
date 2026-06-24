@@ -1366,6 +1366,53 @@
       animation: modalIn .2s ease;
     }
 
+    .modal.modal-lg {
+      max-width: 640px;
+    }
+
+    /* Détail post (admin) */
+    .pm-content {
+      background: rgba(255, 255, 255, .04);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-size: .9rem;
+      line-height: 1.6;
+      color: var(--white);
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin-bottom: 14px;
+    }
+
+    .pm-comment {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+
+    .pm-comment.is-admin {
+      border-color: rgba(166, 108, 255, .35);
+      background: rgba(166, 108, 255, .08);
+    }
+
+    .pm-comment-author {
+      font-size: .74rem;
+      font-weight: 600;
+      color: var(--purple-soft);
+    }
+
+    .pm-comment-text {
+      font-size: .85rem;
+      color: var(--text-sub);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
     @keyframes modalIn {
       from {
         opacity: 0;
@@ -2285,12 +2332,45 @@
           <label
             style="font-size:.78rem;font-weight:500;color:var(--text-sub);display:block;margin-bottom:6px;">Email</label>
           <input type="email" id="new-admin-email" class="add-input" placeholder="admin@exemple.com"
-            style="width:100%;border-radius:10px;padding:11px 14px;" />
+            style="width:100%;border-radius:10px;padding:11px 14px;" autocomplete="off" />
         </div>
+        <div class="field" style="margin-bottom:6px;">
+          <label
+            style="font-size:.78rem;font-weight:500;color:var(--text-sub);display:block;margin-bottom:6px;">Mot de
+            passe</label>
+          <input type="password" id="new-admin-password" class="add-input" placeholder="Min. 6 caractères"
+            style="width:100%;border-radius:10px;padding:11px 14px;" autocomplete="new-password" />
+        </div>
+        <p style="font-size:.72rem;color:var(--text-muted);line-height:1.45;">
+          Crée le compte de connexion (email + mot de passe) et l'accès admin. Le nouvel
+          administrateur pourra se connecter immédiatement (ou après confirmation de l'email si
+          l'option est activée dans Supabase).
+        </p>
       </div>
       <div class="modal-actions">
         <button class="btn btn-ghost" onclick="closeAddAdminModal()">Annuler</button>
-        <button class="btn btn-primary" onclick="addAdmin()">Ajouter</button>
+        <button class="btn btn-primary" id="addAdminBtn" onclick="addAdmin()">Ajouter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Post Detail / Comment Modal -->
+  <div class="modal-overlay" id="postModal">
+    <div class="modal modal-lg">
+      <div class="modal-title">Témoignage complet</div>
+      <div class="modal-body" id="post-modal-body" style="max-height:55vh;overflow-y:auto;padding-right:4px;">
+        <p style="color:var(--text-muted)">Chargement…</p>
+      </div>
+      <div style="margin-top:6px;border-top:1px solid var(--border);padding-top:14px;">
+        <label style="font-size:.75rem;font-weight:600;color:var(--text-sub);display:block;margin-bottom:6px;">
+          Répondre en tant que <span style="color:var(--purple-soft)">Modération 🛡️</span>
+        </label>
+        <textarea id="admin-comment-input" class="add-input" placeholder="Écrire un commentaire de modération…"
+          style="width:100%;border-radius:10px;padding:11px 14px;min-height:70px;resize:vertical;"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="closePostModal()">Fermer</button>
+        <button class="btn btn-primary" id="adminCommentBtn" onclick="submitAdminComment()">Commenter</button>
       </div>
     </div>
   </div>
@@ -2501,6 +2581,9 @@
           <td>${p.reactions_count || 0}</td>
           <td>${timeAgo(p.created_at)}</td>
           <td><div class="tbl-actions">
+            <button class="tbl-btn" onclick="openPostModal('${p.id}')" title="Voir / commenter">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
             <button class="tbl-btn danger" onclick="confirmDeletePost('${p.id}')" title="Supprimer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
             </button>
@@ -2582,6 +2665,9 @@
         <td>${p.comments_count || 0}</td>
         <td>${timeAgo(p.created_at)}</td>
         <td><div class="tbl-actions">
+          <button class="tbl-btn" onclick="openPostModal('${p.id}')" title="Voir / commenter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
           ${p.status === 'published'
             ? `<button class="tbl-btn warn" onclick="confirmHidePost('${p.id}')" title="Masquer">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
@@ -3145,12 +3231,47 @@
 
     async function addAdmin() {
       const email = document.getElementById('new-admin-email').value.trim();
+      const password = document.getElementById('new-admin-password').value;
+      const btn = document.getElementById('addAdminBtn');
+
       if (!email) { toast('Email requis', 'error'); return; }
-      const { error } = await adminSupabase.from('admin_users').insert({ email, role: 'admin', is_active: true });
-      if (error) { toast('Erreur: admin existant peut-être?', 'error'); return; }
-      closeAddAdminModal();
-      toast(`Admin ${email} ajouté`, 'success');
-      loadAdmins();
+      if (!password || password.length < 6) { toast('Mot de passe : 6 caractères min.', 'error'); return; }
+
+      btn.disabled = true;
+      try {
+        // Sauvegarde la session admin courante (signUp peut la remplacer)
+        const { data: { session: adminSession } } = await adminSupabase.auth.getSession();
+
+        // Crée le compte de connexion (email + mot de passe)
+        const { error: signErr } = await adminSupabase.auth.signUp({ email, password });
+
+        // Restaure immédiatement la session de l'admin courant
+        if (adminSession) {
+          await adminSupabase.auth.setSession({
+            access_token: adminSession.access_token,
+            refresh_token: adminSession.refresh_token
+          });
+        }
+
+        if (signErr) {
+          toast(/already|registered|exist/i.test(signErr.message) ? 'Cet email a déjà un compte.' : 'Erreur création du compte.', 'error');
+          return;
+        }
+
+        // Enregistre l'accès admin (avec les droits de l'admin courant)
+        const { error: admErr } = await adminSupabase
+          .from('admin_users')
+          .upsert({ email, role: 'admin', is_active: true }, { onConflict: 'email' });
+        if (admErr) { toast('Compte créé mais accès admin non enregistré.', 'error'); return; }
+
+        closeAddAdminModal();
+        document.getElementById('new-admin-email').value = '';
+        document.getElementById('new-admin-password').value = '';
+        toast(`Admin ${email} ajouté`, 'success');
+        loadAdmins();
+      } finally {
+        btn.disabled = false;
+      }
     }
 
     async function toggleAdmin(id, isActive, email) {
@@ -3188,6 +3309,124 @@
       if (error) { toast('Erreur restauration', 'error'); return; }
       toast('Témoignage restauré', 'success');
       loadPosts();
+    }
+
+    // ═══════════════════════════════════════════════════
+    // DÉTAIL POST + COMMENTAIRE ADMIN (Modération)
+    // ═══════════════════════════════════════════════════
+    const MODERATION_TOKEN = 'mia-moderation-001';
+    let moderationReady = false;
+    let currentModalPostId = null;
+
+    // S'assure qu'une "session" Modération existe pour signer les commentaires admin
+    async function ensureModerationSession() {
+      if (moderationReady) return;
+      await adminSupabase.from('anonymous_sessions').upsert(
+        { session_token: MODERATION_TOKEN, anonymous_name: 'Modération 🛡️' },
+        { onConflict: 'session_token' }
+      );
+      moderationReady = true;
+    }
+
+    async function openPostModal(postId) {
+      currentModalPostId = postId;
+      document.getElementById('postModal').classList.add('open');
+      document.getElementById('admin-comment-input').value = '';
+      const body = document.getElementById('post-modal-body');
+      body.innerHTML = '<p style="color:var(--text-muted)">Chargement…</p>';
+
+      const { data: post, error } = await adminSupabase
+        .from('posts').select('*').eq('id', postId).maybeSingle();
+      if (error || !post) { body.innerHTML = '<p style="color:var(--error)">Témoignage introuvable.</p>'; return; }
+
+      let authorName = 'Anonyme';
+      if (post.session_token) {
+        const { data: s } = await adminSupabase
+          .from('anonymous_sessions').select('anonymous_name').eq('session_token', post.session_token).maybeSingle();
+        if (s) authorName = s.anonymous_name || 'Anonyme';
+        await fetchIdentities([post.session_token]);
+      }
+
+      body.innerHTML = `
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;">
+          <span style="font-weight:600;">${escapeHtml(authorName)}</span>
+          <span class="badge ${post.status}">${post.status}</span>
+          <span style="font-size:.74rem;color:var(--text-muted);">${formatDate(post.created_at)}</span>
+        </div>
+        ${realIdHtml(post.session_token)}
+        <div class="pm-content">${escapeHtml(post.content)}</div>
+        <div style="display:flex;gap:16px;font-size:.76rem;color:var(--text-muted);margin-bottom:14px;">
+          <span>👁 ${post.views_count || 0}</span>
+          <span>❤ ${post.reactions_count || 0}</span>
+          <span>💬 ${post.comments_count || 0}</span>
+        </div>
+        <div style="font-size:.78rem;font-weight:600;color:var(--text-sub);margin-bottom:8px;">Commentaires</div>
+        <div id="pm-comments"><p style="color:var(--text-muted);font-size:.8rem;">Chargement…</p></div>
+      `;
+      await loadModalComments(postId);
+    }
+
+    async function loadModalComments(postId) {
+      const wrap = document.getElementById('pm-comments');
+      if (!wrap) return;
+      const { data: comments } = await adminSupabase
+        .from('comments').select('id,content,session_token,status,created_at')
+        .eq('post_id', postId).eq('status', 'visible').order('created_at', { ascending: true });
+
+      const list = comments || [];
+      if (list.length === 0) {
+        wrap.innerHTML = '<p style="color:var(--text-muted);font-size:.8rem;">Aucun commentaire.</p>';
+        return;
+      }
+      const tokens = [...new Set(list.map(c => c.session_token).filter(Boolean))];
+      let nameMap = {};
+      if (tokens.length) {
+        const { data: sessions } = await adminSupabase
+          .from('anonymous_sessions').select('session_token,anonymous_name').in('session_token', tokens);
+        (sessions || []).forEach(s => { nameMap[s.session_token] = s.anonymous_name; });
+      }
+      await fetchIdentities(tokens);
+
+      wrap.innerHTML = list.map(c => {
+        const isAdmin = c.session_token === MODERATION_TOKEN;
+        const name = isAdmin ? 'Modération 🛡️' : (nameMap[c.session_token] || 'Anonyme');
+        return `
+        <div class="pm-comment${isAdmin ? ' is-admin' : ''}">
+          <div class="pm-comment-author">${escapeHtml(name)}${isAdmin ? '' : realIdInline(c.session_token)}
+            <span style="color:var(--text-muted);font-weight:400;"> · ${timeAgo(c.created_at)}</span></div>
+          <div class="pm-comment-text">${escapeHtml(c.content)}</div>
+        </div>`;
+      }).join('');
+    }
+
+    async function submitAdminComment() {
+      if (!currentModalPostId) return;
+      const input = document.getElementById('admin-comment-input');
+      const btn = document.getElementById('adminCommentBtn');
+      const text = input.value.trim();
+      if (!text) { toast('Commentaire vide', 'error'); return; }
+
+      btn.disabled = true;
+      try {
+        await ensureModerationSession();
+        const { error } = await adminSupabase.from('comments').insert({
+          post_id: currentModalPostId,
+          session_token: MODERATION_TOKEN,
+          content: text,
+          status: 'visible'
+        });
+        if (error) { toast('Erreur envoi commentaire', 'error'); return; }
+        input.value = '';
+        toast('Commentaire publié', 'success');
+        await loadModalComments(currentModalPostId);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function closePostModal() {
+      document.getElementById('postModal').classList.remove('open');
+      currentModalPostId = null;
     }
 
     // ═══════════════════════════════════════════════════
